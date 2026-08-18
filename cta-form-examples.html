@@ -69,6 +69,45 @@
   .pcard .pprice{font-size:13px; color:var(--muted);}
   .pcard button.btn{margin-top:8px; align-self:flex-start;}
 
+  /* placement wireframes */
+  .pwrap{display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:24px; margin-bottom:20px;}
+  .pgroup3{background:var(--panel2); border:1px solid var(--border); border-radius:16px; overflow:hidden;}
+  .pgroup3-head{display:flex; align-items:center; gap:10px; padding:14px 16px; border-bottom:1px solid var(--border);}
+  .pgroup3-head .emoji{font-size:20px;}
+  .pgroup3-head h4{font-size:15px; margin:0;}
+  .wireframe{background:#0e1119; margin:14px; border-radius:12px; border:1px solid var(--border); overflow:hidden;}
+  .wf-bar{display:flex; align-items:center; justify-content:space-between; padding:8px 10px; background:var(--panel); border-bottom:1px solid var(--border);}
+  .wf-dots{display:flex; gap:4px;}
+  .wf-dots span{width:6px; height:6px; border-radius:50%; background:var(--border); display:block;}
+  .wf-hero{padding:22px 12px 18px; text-align:center; background:linear-gradient(160deg, color-mix(in srgb, var(--accent) 24%, transparent), transparent);}
+  .wf-line{height:7px; border-radius:4px; background:var(--border); margin:0 auto 7px; opacity:.7;}
+  .wf-cta{display:inline-flex; flex-direction:column; align-items:center; gap:1px; font-family:'Prompt',sans-serif; font-weight:700; font-size:10.5px; border-radius:999px; padding:7px 13px; color:#fff; background:var(--accent); box-shadow:0 0 0 4px color-mix(in srgb, var(--accent) 22%, transparent); margin-top:8px;}
+  .wf-cta small{font-weight:400; font-size:9px; opacity:.85;}
+  .wf-cta.ghost{background:transparent; border:1.5px solid var(--accent); color:var(--accent); box-shadow:none; padding:5.5px 11px;}
+  .wf-section-label{font-size:10.5px; color:var(--muted); padding:10px 12px 2px; font-family:'Prompt',sans-serif; font-weight:700; text-transform:uppercase; letter-spacing:.04em;}
+  .wf-cards{display:grid; grid-template-columns:repeat(3,1fr); gap:7px; padding:0 12px 12px;}
+  .wf-card{background:var(--panel2); border:1px solid var(--border); border-radius:8px; padding:7px; display:flex; flex-direction:column; align-items:center; gap:5px;}
+  .wf-card .thumb{width:100%; height:26px; border-radius:6px; background:color-mix(in srgb, var(--accent) 28%, transparent);}
+  .wf-card .wf-cta{font-size:8.5px; padding:4px 8px; margin-top:0;}
+  .wf-contact{padding:11px 12px 14px; border-top:1px dashed var(--border); display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;}
+  .wf-contact .miniform{flex:1; min-width:110px;}
+  .wf-contact .miniform .wf-line{margin:0 0 5px;}
+  .wf-sticky-note{margin:0 14px 14px; padding:8px 10px; border-radius:8px; border:1px dashed var(--accent); font-size:11px; color:var(--accent); display:flex; align-items:center; gap:6px;}
+  .wf-caption{padding:14px 16px 16px; font-size:12.5px; color:var(--muted);}
+  .wf-caption b{color:var(--text);}
+  .gemini-box{background:#0e1119; border:1px solid var(--border); border-radius:10px; padding:14px 16px; margin-top:10px;}
+  .gemini-box .glabel{font-family:'Prompt',sans-serif; font-weight:700; font-size:12px; color:var(--code); margin-bottom:6px; display:flex; align-items:center; gap:6px;}
+  .gemini-box pre{white-space:pre-wrap; word-break:break-word; font-family:ui-monospace,Consolas,monospace; font-size:12.5px; color:#d1d5db; margin:0; line-height:1.6;}
+  .gstruct{margin-top:14px; padding-top:12px; border-top:1px dashed var(--border);}
+  .gstruct-title{font-family:'Prompt',sans-serif; font-weight:700; font-size:12px; color:var(--muted); margin-bottom:8px; text-transform:uppercase; letter-spacing:.03em;}
+  .gstruct table{width:100%; border-collapse:collapse; font-size:13px;}
+  .gstruct td{padding:6px 8px; vertical-align:top; border-bottom:1px solid var(--border);}
+  .gstruct tr:last-child td{border-bottom:none;}
+  .gstruct td:first-child{width:34%; font-family:'Prompt',sans-serif; font-weight:600; color:var(--text); white-space:nowrap;}
+  .gstruct td:last-child{color:var(--muted); white-space:normal;}
+  .copy-btn{margin-top:10px; font-family:'Prompt',sans-serif; font-weight:600; font-size:12px; background:var(--panel2); border:1px solid var(--border); color:var(--text); border-radius:8px; padding:6px 12px; cursor:pointer;}
+  .copy-btn:hover{border-color:var(--code); color:var(--code);}
+
   button.btn{font-family:'Prompt',sans-serif; font-weight:700; font-size:13.5px; border-radius:999px; padding:9px 18px; border:2px solid transparent; cursor:pointer; transition:.15s transform,.15s box-shadow; color:#fff;}
   button.btn:hover{transform:translateY(-2px); box-shadow:0 6px 18px rgba(0,0,0,.35);}
   button.btn.ghost{background:transparent !important; }
@@ -145,6 +184,7 @@
   <div class="wrap">
     <a href="#formula">สูตร CTA</a>
     <a href="#quick4">4 ประเภทธุรกิจหลัก</a>
+    <a href="#placement">ตำแหน่งวาง CTA</a>
     <a href="#productgrid">ตัวอย่างหน้า Products/Services</a>
     <a href="#matrix">CTA Makeover Matrix</a>
     <a href="#cases">4 กรณีศึกษา Before/After</a>
@@ -220,10 +260,170 @@
   </div>
 </section>
 
+<section class="alt" id="placement">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">Lesson 2 · ตำแหน่งวางปุ่ม CTA</div>
+      <h2>มี CTA แล้ว ควรวางตรงไหนในแต่ละหน้า</h2>
+      <p>Wireframe จำลองหน้า Home ของแต่ละประเภทธุรกิจ พร้อมจุดวาง CTA ตามหลัก Z-Pattern (Hero + มุมขวาบน Header) และ F-Pattern (การ์ดสินค้า/บริการ)</p>
+    </div>
+
+    <div class="pwrap">
+
+      <div class="pgroup3" style="--accent:var(--ecom)">
+        <div class="pgroup3-head"><span class="emoji">🛍️</span><h4>E-Commerce</h4></div>
+        <div class="wireframe">
+          <div class="wf-bar"><div class="wf-dots"><span></span><span></span><span></span></div><span class="wf-cta ghost">② ช้อปเลย</span></div>
+          <div class="wf-hero">
+            <div class="wf-line" style="width:70%"></div>
+            <div class="wf-line" style="width:50%"></div>
+            <span class="wf-cta">① สั่งเลย<small>Action + Benefit</small></span>
+          </div>
+          <div class="wf-section-label">Products (F-Pattern)</div>
+          <div class="wf-cards">
+            <div class="wf-card"><div class="thumb"></div><span class="wf-cta">③ สั่งเลย</span></div>
+            <div class="wf-card"><div class="thumb"></div><span class="wf-cta">③ สั่งเลย</span></div>
+            <div class="wf-card"><div class="thumb"></div><span class="wf-cta">③ สั่งเลย</span></div>
+          </div>
+        </div>
+        <div class="wf-caption">① Primary กลาง Hero (จุดเริ่ม Z-Pattern) · ② Secondary มุมขวาบน Header (จุดจบ Z-Pattern) · ③ ปุ่มติดทุกการ์ดสินค้า ไม่ต้องมี Sticky เพิ่ม เพราะตัดสินใจซื้อเร็ว ราคาไม่สูง</div>
+      </div>
+
+      <div class="pgroup3" style="--accent:var(--clinic)">
+        <div class="pgroup3-head"><span class="emoji">🤝</span><h4>Service &amp; Lead</h4></div>
+        <div class="wireframe">
+          <div class="wf-bar"><div class="wf-dots"><span></span><span></span><span></span></div><span class="wf-cta ghost">② ขอใบเสนอราคา</span></div>
+          <div class="wf-hero">
+            <div class="wf-line" style="width:65%"></div>
+            <div class="wf-line" style="width:45%"></div>
+            <span class="wf-cta">① จองคิวตรวจผิวฟรีวันนี้<small>Action + Benefit</small></span>
+          </div>
+          <div class="wf-section-label">Packages (F-Pattern)</div>
+          <div class="wf-cards">
+            <div class="wf-card"><div class="thumb"></div><span class="wf-cta">③ ขอราคา</span></div>
+            <div class="wf-card"><div class="thumb"></div><span class="wf-cta">③ นัดคุยฟรี</span></div>
+            <div class="wf-card"><div class="thumb"></div><span class="wf-cta">③ ขอราคา</span></div>
+          </div>
+          <div class="wf-sticky-note">🔒 ④ Sticky Button ลอยขอบล่าง "นัดคุยงานฟรี" ติดตามตลอดการเลื่อนหน้า</div>
+        </div>
+        <div class="wf-caption">งานบริการตัดสินใจนานกว่า E-Commerce — เพิ่ม ④ Sticky/Floating CTA ให้กดได้ทุกเวลาโดยไม่ต้องเลื่อนกลับขึ้นไปหา</div>
+      </div>
+
+      <div class="pgroup3" style="--accent:var(--factory)">
+        <div class="pgroup3-head"><span class="emoji">🏢</span><h4>Corporate/B2B</h4></div>
+        <div class="wireframe">
+          <div class="wf-bar"><div class="wf-dots"><span></span><span></span><span></span></div><span class="wf-cta ghost">② ติดต่อฝ่ายขาย 🔒</span></div>
+          <div class="wf-hero">
+            <div class="wf-line" style="width:68%"></div>
+            <div class="wf-line" style="width:48%"></div>
+            <span class="wf-cta">① ขอใบเสนอราคา &amp; สเปกสูตรผลิต<small>Action + Benefit</small></span>
+          </div>
+          <div class="wf-section-label">Solutions (F-Pattern)</div>
+          <div class="wf-cards">
+            <div class="wf-card"><div class="thumb"></div><span class="wf-cta">③ ขอสเปก</span></div>
+            <div class="wf-card"><div class="thumb"></div><span class="wf-cta">③ ดาวน์โหลด</span></div>
+            <div class="wf-card"><div class="thumb"></div><span class="wf-cta">③ ติดต่อ</span></div>
+          </div>
+        </div>
+        <div class="wf-caption">② Header CTA ใส่ 🔒 (Sticky) ติดตัวตลอดเวลาที่เลื่อน เพราะลูกค้าองค์กรอาจเลื่อนอ่านมาตรฐาน/ใบรับรองยาวก่อนตัดสินใจติดต่อ ไม่ต้องมี Floating ล่างเพิ่มเพราะดูเป็นทางการเกินไปสำหรับกลุ่ม B2B</div>
+      </div>
+
+      <div class="pgroup3" style="--accent:var(--education)">
+        <div class="pgroup3-head"><span class="emoji">🎓</span><h4>Education</h4></div>
+        <div class="wireframe">
+          <div class="wf-bar"><div class="wf-dots"><span></span><span></span><span></span></div><span class="wf-cta ghost">② ดูหลักสูตร</span></div>
+          <div class="wf-hero">
+            <div class="wf-line" style="width:66%"></div>
+            <div class="wf-line" style="width:46%"></div>
+            <span class="wf-cta">① ทดลองเรียนฟรีทาง LINE<small>Action + Benefit</small></span>
+          </div>
+          <div class="wf-section-label">Courses (F-Pattern)</div>
+          <div class="wf-cards">
+            <div class="wf-card"><div class="thumb"></div><span class="wf-cta">③ สมัครเลย</span></div>
+            <div class="wf-card"><div class="thumb"></div><span class="wf-cta">③ ดูตัวอย่าง</span></div>
+            <div class="wf-card"><div class="thumb"></div><span class="wf-cta">③ สมัครเลย</span></div>
+          </div>
+        </div>
+        <div class="wf-caption">① เน้นข้อเสนอ "ทดลองฟรี" ที่ Hero เพื่อลดความลังเลก่อนจ่ายเงินจริง ③ ทุกการ์ดคอร์สควรมีทั้งปุ่มดูตัวอย่างและปุ่มสมัคร ให้เลือกได้ตามความพร้อม</div>
+      </div>
+
+    </div>
+
+    <div class="note">💡 ทั้ง 4 Wireframe ใช้หลักเดียวกัน: ① Primary CTA ที่ Hero (จุดเริ่มสายตา Z-Pattern) ② Secondary/Ghost CTA มุมขวาบน Header (จุดจบสายตา Z-Pattern) ③ CTA ติดทุกการ์ดในโซนเนื้อหา (F-Pattern) ④ เพิ่ม Sticky/Floating เฉพาะธุรกิจที่ตัดสินใจนาน/ราคาสูง — ดูรายละเอียดตำแหน่งจริงต่อกรณีศึกษาได้ที่ <a href="#cases" style="color:var(--code); font-weight:700;">4 กรณีศึกษา Before/After ↓</a></div>
+
+    <div class="section-head" style="margin-top:44px">
+      <div class="kicker">Bonus · หารูปไม่ได้ก็สร้างเองได้</div>
+      <h2>Prompt สำหรับสร้างภาพตัวอย่างหน้าเว็บด้วย Gemini</h2>
+      <p>ถ้าอยากได้ภาพตัวอย่างที่สมจริงกว่า Wireframe ด้านบน คัดลอก Prompt ด้านล่างไปวางใน Gemini (หรือเครื่องมือสร้างภาพ AI อื่นๆ) ได้เลย ครบทั้ง 4 ประเภทธุรกิจ</p>
+    </div>
+    <div class="pwrap">
+      <div class="gemini-box">
+        <div class="glabel">🛍️ E-Commerce</div>
+        <pre>UI mockup of a modern e-commerce homepage, clean flat design, light background. Header bar with logo on the left and a small pill-shaped "ช้อปเลย" secondary button top-right. Large hero section with a bold Thai headline placeholder, subheading, and one prominent rounded primary CTA button centered below the text with the label "สั่งเลย". Below the hero, a 3-column product grid, each product card has an image placeholder, product name, price in Thai baht (฿), and its own small rounded CTA button "สั่งเลย". Warm, minimal color palette (black/white with one accent color). Website screenshot style, high detail, no real people, no logos of real brands, 16:9 aspect ratio.</pre>
+        <div class="gstruct">
+          <div class="gstruct-title">โครงสร้าง Prompt (แปลไทย)</div>
+          <table>
+            <tr><td>1. ภาพรวม/สไตล์</td><td>Mockup หน้าเว็บ E-Commerce สมัยใหม่ ดีไซน์เรียบ (Flat) พื้นหลังสีอ่อน</td></tr>
+            <tr><td>2. Header</td><td>แถบหัวเว็บ: โลโก้ซ้าย + ปุ่ม Secondary ทรงแคปซูลเล็กมุมขวาบน ("ช้อปเลย")</td></tr>
+            <tr><td>3. Hero + Primary CTA</td><td>หัวข้อใหญ่ตัวหนา + คำบรรยาย + ปุ่ม Primary CTA ทรงมนตรงกลางใต้ข้อความ ("สั่งเลย")</td></tr>
+            <tr><td>4. Content Grid</td><td>กริดสินค้า 3 คอลัมน์ แต่ละการ์ดมีรูป/ชื่อ/ราคา (฿)/ปุ่ม CTA เล็กของตัวเอง</td></tr>
+            <tr><td>5. โทนสี/สไตล์</td><td>โทนสีอบอุ่น เรียบง่าย (ดำ/ขาว + สีเน้น 1 สี)</td></tr>
+            <tr><td>6. รายละเอียดทางเทคนิค</td><td>สไตล์ภาพหน้าจอเว็บไซต์ รายละเอียดสูง ไม่มีคนจริง ไม่มีโลโก้แบรนด์จริง อัตราส่วนภาพ 16:9</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="gemini-box">
+        <div class="glabel">🤝 Service &amp; Lead</div>
+        <pre>UI mockup of a modern local service business homepage (e.g. beauty clinic), clean flat design. Header bar with logo left and a ghost-style outlined button top-right labeled "ขอใบเสนอราคา". Hero section with Thai headline about the service, subheading, and one solid rounded primary CTA button centered labeled "จองคิวตรวจผิวฟรีวันนี้". Below, a 3-column package/service card grid, each card has an icon, package name, short description, and a CTA button ("ขอใบเสนอราคา" or "นัดคุยงานฟรี"). At the very bottom of the screen, show a floating sticky button bar labeled "นัดคุยงานฟรี" pinned to the bottom edge. Soft pastel color palette. Website screenshot style, high detail, no real people, no real logos, 16:9 aspect ratio.</pre>
+        <div class="gstruct">
+          <div class="gstruct-title">โครงสร้าง Prompt (แปลไทย)</div>
+          <table>
+            <tr><td>1. ภาพรวม/สไตล์</td><td>Mockup หน้าเว็บธุรกิจบริการท้องถิ่น (เช่น คลินิกความงาม) ดีไซน์เรียบ (Flat)</td></tr>
+            <tr><td>2. Header</td><td>โลโก้ซ้าย + ปุ่ม Ghost (มีแค่เส้นขอบ ไม่ทึบสี) มุมขวาบน ("ขอใบเสนอราคา")</td></tr>
+            <tr><td>3. Hero + Primary CTA</td><td>หัวข้อเกี่ยวกับบริการ + คำบรรยาย + ปุ่ม Primary CTA ทึบสีตรงกลาง ("จองคิวตรวจผิวฟรีวันนี้")</td></tr>
+            <tr><td>4. Content Grid</td><td>กริดแพ็กเกจ/บริการ 3 คอลัมน์ แต่ละการ์ดมีไอคอน/ชื่อแพ็กเกจ/คำอธิบายสั้น/ปุ่ม CTA</td></tr>
+            <tr><td>5. Sticky Button</td><td>แถบปุ่มลอยติดขอบล่างสุดของจอตลอดเวลา ("นัดคุยงานฟรี")</td></tr>
+            <tr><td>6. โทนสี/สไตล์</td><td>โทนสีพาสเทลนุ่มนวล + สไตล์ภาพหน้าจอเว็บไซต์ รายละเอียดสูง ไม่มีคนจริง/โลโก้จริง อัตราส่วน 16:9</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="gemini-box">
+        <div class="glabel">🏢 Corporate/B2B</div>
+        <pre>UI mockup of a professional corporate/B2B factory homepage, clean formal flat design, navy blue and white color palette. Header bar with logo left and a small lock icon next to an outlined "ติดต่อฝ่ายขาย" button top-right indicating it stays fixed while scrolling. Hero section with a formal Thai headline about manufacturing/OEM solutions and one solid primary CTA button centered labeled "ขอใบเสนอราคา & สเปกสูตรผลิต". Below, a 3-column solutions/product-line grid with certification badge icons (GMP/FDA style placeholders) and CTA buttons like "ขอสเปกสูตรผลิต" or "ดาวน์โหลดโปรไฟล์โรงงาน". Serious, trustworthy, corporate aesthetic. Website screenshot style, high detail, no real people, no real logos, 16:9 aspect ratio.</pre>
+        <div class="gstruct">
+          <div class="gstruct-title">โครงสร้าง Prompt (แปลไทย)</div>
+          <table>
+            <tr><td>1. ภาพรวม/สไตล์</td><td>Mockup หน้าเว็บองค์กร/โรงงาน B2B ดีไซน์เป็นทางการ โทนน้ำเงินกรม-ขาว</td></tr>
+            <tr><td>2. Header</td><td>โลโก้ซ้าย + ไอคอนล็อกเล็กๆ ข้างปุ่ม Outline มุมขวาบน ("ติดต่อฝ่ายขาย") สื่อว่าปุ่มนี้ Sticky ติดตามการเลื่อนหน้า</td></tr>
+            <tr><td>3. Hero + Primary CTA</td><td>หัวข้อทางการเกี่ยวกับโซลูชันการผลิต/OEM + ปุ่ม Primary CTA ทึบสีตรงกลาง ("ขอใบเสนอราคา &amp; สเปกสูตรผลิต")</td></tr>
+            <tr><td>4. Content Grid</td><td>กริดโซลูชัน/สายผลิตภัณฑ์ 3 คอลัมน์ พร้อมไอคอนตรารับรอง (GMP/FDA) และปุ่ม CTA ("ขอสเปกสูตรผลิต"/"ดาวน์โหลดโปรไฟล์โรงงาน")</td></tr>
+            <tr><td>5. โทนสี/สไตล์</td><td>ภาพลักษณ์จริงจัง น่าเชื่อถือ สไตล์องค์กร + สไตล์ภาพหน้าจอเว็บไซต์ รายละเอียดสูง ไม่มีคนจริง/โลโก้จริง อัตราส่วน 16:9</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="gemini-box">
+        <div class="glabel">🎓 Education</div>
+        <pre>UI mockup of a modern online course landing page, clean friendly flat design, green accent color. Header bar with logo left and an outlined "ดูหลักสูตรและราคาเต็ม" button top-right. Hero section with an encouraging Thai headline about learning, subheading, and one solid rounded primary CTA button centered labeled "ทดลองเรียนฟรีทาง LINE". Below, a 3-column course card grid, each card has a course thumbnail placeholder, course title, price in Thai baht (฿), and two small buttons per card: an outlined "ดูวิดีโอตัวอย่าง" and a solid "สมัครเลย". Bright, approachable, education-app aesthetic. Website screenshot style, high detail, no real people, no real logos, 16:9 aspect ratio.</pre>
+        <div class="gstruct">
+          <div class="gstruct-title">โครงสร้าง Prompt (แปลไทย)</div>
+          <table>
+            <tr><td>1. ภาพรวม/สไตล์</td><td>Mockup หน้า Landing Page คอร์สเรียนออนไลน์ ดีไซน์เป็นมิตร โทนสีเขียว</td></tr>
+            <tr><td>2. Header</td><td>โลโก้ซ้าย + ปุ่ม Outline มุมขวาบน ("ดูหลักสูตรและราคาเต็ม")</td></tr>
+            <tr><td>3. Hero + Primary CTA</td><td>หัวข้อให้กำลังใจเกี่ยวกับการเรียน + คำบรรยาย + ปุ่ม Primary CTA ทึบสีตรงกลาง ("ทดลองเรียนฟรีทาง LINE")</td></tr>
+            <tr><td>4. Content Grid</td><td>กริดคอร์สเรียน 3 คอลัมน์ แต่ละการ์ดมีภาพปกคอร์ส/ชื่อคอร์ส/ราคา (฿) และปุ่ม 2 ปุ่ม (Outline "ดูวิดีโอตัวอย่าง" + ทึบสี "สมัครเลย")</td></tr>
+            <tr><td>5. โทนสี/สไตล์</td><td>โทนสีสว่าง เป็นมิตร สไตล์แอปการศึกษา + สไตล์ภาพหน้าจอเว็บไซต์ รายละเอียดสูง ไม่มีคนจริง/โลโก้จริง อัตราส่วน 16:9</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="note" style="margin-top:8px">💡 ปรับ Prompt ได้ตามธุรกิจจริงของนักเรียน เช่น เปลี่ยนสี, เปลี่ยนคำในปุ่ม, หรือใส่ชื่อหมวดสินค้าจริงแทนคำทั่วไปด้านบน เพื่อให้ภาพตัวอย่างใกล้เคียงเว็บที่จะทำจริงมากขึ้น</div>
+  </div>
+</section>
+
 <section id="productgrid">
   <div class="wrap">
     <div class="section-head">
-      <div class="kicker">Lesson 2 · จัด Layout สินค้า/บริการแบบ Grid</div>
+      <div class="kicker">Lesson 2 · Products/Services — จัด Layout แบบ Grid</div>
       <h2>ตัวอย่างหน้า Products/Services แต่ละประเภทธุรกิจ</h2>
       <p>การ์ดแต่ละใบยังคง 4 องค์ประกอบเดิม (รูป, ชื่อ, ราคา/รายละเอียดสั้น, ปุ่ม CTA) แต่สิ่งที่ "ควรเน้น" ต่างกันไปตามประเภทธุรกิจ</p>
     </div>
