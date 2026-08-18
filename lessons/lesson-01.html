@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ครั้งที่ 1: วางแผนธุรกิจ, Sitemap และเริ่มสร้างหน้า Home (Hero Section) จริง | การสร้างเว็บไซต์ (รวบรัด)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@500;600;700;800&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0b10; --bg2:#12141c; --panel:#161923;
+    --gs:#21e6a1; --ps:#3aa0ff; --code:#ff5470; --mix:#b98bff; --cyan:#00ffff; --blue:#0066ff;
+    --accent:#21e6a1;
+    --text:#f3f6fb; --muted:#9aa5b8; --border:rgba(255,255,255,.09);
+  }
+  *{box-sizing:border-box;}
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:'Sarabun','Noto Sans Thai',-apple-system,'Segoe UI',sans-serif;
+    font-size:18px; line-height:1.75;
+    background-image:
+      radial-gradient(circle at 10% 0%, rgba(0,102,255,.14), transparent 40%),
+      radial-gradient(circle at 90% 10%, rgba(0,255,255,.10), transparent 38%),
+      repeating-linear-gradient(0deg, rgba(255,255,255,.02) 0px, rgba(255,255,255,.02) 1px, transparent 1px, transparent 42px),
+      repeating-linear-gradient(90deg, rgba(255,255,255,.02) 0px, rgba(255,255,255,.02) 1px, transparent 1px, transparent 42px);
+    background-attachment:fixed;
+  }
+  h1,h2,h3,h4{ font-family:'Prompt','Sarabun',sans-serif; }
+  a{ color:var(--cyan); }
+  p{ margin:0 0 16px; color:#dfe4ee; }
+
+  header.top{ position:sticky; top:0; z-index:30; background:rgba(10,11,16,.82); backdrop-filter:blur(14px); border-bottom:1px solid var(--border); }
+  .top-inner{ max-width:920px; margin:0 auto; padding:16px 24px; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+  .back{ font-family:'Prompt',sans-serif; font-weight:600; font-size:15px; color:var(--muted); display:flex; align-items:center; gap:6px; }
+  .back:hover{ color:var(--cyan); }
+  .segnav{ display:flex; gap:16px; font-size:14px; font-weight:600; color:var(--muted); }
+  .segnav a:hover{ color:var(--accent); }
+
+  .hero{ max-width:920px; margin:0 auto; padding:56px 24px 32px; }
+  .eyebrow{ display:flex; align-items:center; gap:10px; margin-bottom:18px; flex-wrap:wrap; }
+  .badge-num{ font-family:'Prompt',sans-serif; font-weight:700; font-size:14px; padding:6px 16px; border-radius:999px; background:color-mix(in srgb, var(--accent) 15%, transparent); color:var(--accent); border:1px solid var(--accent); }
+  .badge-meta{ font-size:14px; font-weight:600; color:var(--muted); }
+  h1{ font-size:38px; font-weight:800; margin:0 0 18px; line-height:1.25; color:var(--text); }
+  .obj-box{ background:var(--panel); border:1px solid var(--border); border-left:3px solid var(--accent); border-radius:14px; padding:20px 22px; margin-top:10px; }
+  .obj-box h4{ margin:0 0 10px; font-size:15px; color:var(--accent); text-transform:uppercase; letter-spacing:.04em; }
+  .obj-box ul{ margin:0; padding-inline-start:20px; }
+  .obj-box li{ margin-bottom:6px; font-size:16px; color:#dfe4ee; }
+
+  .deliverable-box{ background:rgba(255,207,92,.08); border:1px solid rgba(255,207,92,.4); border-radius:14px; padding:18px 22px; margin-top:14px; display:flex; gap:14px; align-items:flex-start; }
+  .deliverable-box .dl-icon{ font-size:24px; flex:none; }
+  .deliverable-box h4{ margin:0 0 6px; font-size:14px; color:#ffcf5c; text-transform:uppercase; letter-spacing:.04em; font-family:'Prompt',sans-serif; }
+  .deliverable-box p{ margin:0; font-size:16px; font-weight:600; color:#fff5db; }
+
+  .section-wrap{ max-width:920px; margin:0 auto; padding:8px 24px 40px; }
+
+  .segment{ padding:40px 0; border-top:1px solid var(--border); scroll-margin-top:80px; }
+  .segment-head{ display:flex; align-items:baseline; gap:14px; margin-bottom:20px; flex-wrap:wrap; }
+  .segment-time{ font-family:'Prompt',sans-serif; font-size:13px; font-weight:700; color:var(--accent); background:color-mix(in srgb, var(--accent) 14%, transparent); border:1px solid var(--accent); padding:4px 12px; border-radius:999px; }
+  .segment-head h2{ font-size:24px; font-weight:700; margin:0; }
+  .segment-body h3{ font-size:19px; font-weight:700; margin:28px 0 12px; color:var(--text); }
+  .segment-body h3:first-child{ margin-top:0; }
+
+  ul.list{ margin:0 0 16px; padding-inline-start:22px; }
+  ul.list li{ margin-bottom:8px; color:#dfe4ee; }
+  ol.steps{ margin:0 0 16px; padding-inline-start:0; list-style:none; counter-reset:step; }
+  ol.steps li{ counter-increment:step; position:relative; padding:12px 16px 12px 48px; margin-bottom:10px; background:var(--panel); border:1px solid var(--border); border-radius:12px; color:#dfe4ee; }
+  ol.steps li::before{ content:counter(step); position:absolute; left:14px; top:50%; transform:translateY(-50%); width:24px; height:24px; border-radius:50%; background:var(--accent); color:#05060a; font-weight:800; font-size:13px; display:flex; align-items:center; justify-content:center; font-family:'Prompt',sans-serif; }
+
+  .table-wrap{ overflow-x:auto; margin:0 0 20px; border:1px solid var(--border); border-radius:12px; }
+  table{ width:100%; border-collapse:collapse; font-size:15px; }
+  th{ background:var(--panel); color:var(--accent); text-align:left; padding:12px 14px; font-family:'Prompt',sans-serif; font-weight:600; font-size:13px; text-transform:uppercase; letter-spacing:.03em; border-bottom:1px solid var(--border); }
+  td{ padding:12px 14px; border-bottom:1px solid var(--border); color:#dfe4ee; }
+  tr:last-child td{ border-bottom:none; }
+
+  .callout{ display:flex; gap:12px; padding:16px 18px; border-radius:14px; margin-bottom:18px; font-size:15.5px; }
+  .callout-icon{ font-size:18px; flex:none; }
+  .callout.good{ background:rgba(33,230,161,.08); border:1px solid rgba(33,230,161,.35); color:#dfe4ee; }
+  .callout.bad{ background:rgba(255,84,112,.08); border:1px solid rgba(255,84,112,.35); color:#dfe4ee; }
+  .callout.info{ background:rgba(0,102,255,.08); border:1px solid rgba(0,102,255,.35); color:#dfe4ee; }
+
+  .worksheet{ background:linear-gradient(180deg, var(--panel), var(--bg2)); border:1px solid var(--border); border-radius:16px; padding:22px; margin:20px 0; }
+  .worksheet-title{ font-family:'Prompt',sans-serif; font-weight:700; font-size:16px; margin-bottom:16px; color:var(--text); }
+  .ws-field{ display:block; margin-bottom:14px; }
+  .ws-field span{ display:block; font-size:14px; color:var(--muted); margin-bottom:6px; font-weight:600; }
+  .ws-field input, .ws-field textarea{
+    width:100%; background:rgba(255,255,255,.04); border:1px solid var(--border); border-radius:10px; padding:10px 12px;
+    color:var(--text); font-family:'Sarabun',sans-serif; font-size:15px; resize:vertical;
+  }
+  .ws-field input:focus, .ws-field textarea:focus{ outline:none; border-color:var(--accent); box-shadow:0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent); }
+  .ws-save-note{ font-size:12.5px; color:var(--muted); text-align:right; opacity:.7; }
+
+  .checklist-final{ background:var(--panel); border:1px solid var(--border); border-radius:16px; padding:24px; margin-top:12px; }
+  .checklist-final h4{ margin:0 0 14px; font-size:16px; color:var(--accent); }
+  .cl-item{ display:flex; align-items:flex-start; gap:10px; margin-bottom:10px; font-size:15.5px; color:#dfe4ee; }
+  .cl-item input{ margin-top:4px; accent-color:var(--accent); width:18px; height:18px; flex:none; }
+
+  .sources{ margin-top:36px; font-size:13.5px; color:var(--muted); border-top:1px solid var(--border); padding-top:18px; }
+  .sources a{ color:var(--muted); text-decoration:underline; }
+
+  .hero-diagram{ border:1px dashed var(--border); border-radius:16px; padding:18px; margin:16px 0 24px; background:radial-gradient(circle at 30% 20%, rgba(255,255,255,.04), transparent 60%); }
+  .hd-frame{ position:relative; border:1px solid var(--border); border-radius:12px; overflow:hidden; background:linear-gradient(160deg,#1a1d29,#0e0f16); min-height:280px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:32px 20px; gap:10px; }
+  .hd-tag{ position:absolute; font-family:'Prompt',sans-serif; font-size:11px; font-weight:700; letter-spacing:.03em; padding:3px 9px; border-radius:999px; background:rgba(0,0,0,.55); border:1px solid; }
+  .hd-visual-tag{ top:10px; left:10px; color:var(--cyan); border-color:var(--cyan); }
+  .hd-headline-tag{ top:78px; left:10px; color:var(--gs); border-color:var(--gs); }
+  .hd-sub-tag{ top:150px; left:10px; color:var(--ps); border-color:var(--ps); }
+  .hd-cta-tag{ bottom:16px; right:14px; color:var(--code); border-color:var(--code); }
+  .hd-headline{ font-family:'Prompt',sans-serif; font-weight:800; font-size:28px; color:#fff; max-width:520px; }
+  .hd-sub{ font-size:15px; color:#c6ccd8; max-width:440px; }
+  .hd-btn{ margin-top:10px; font-family:'Prompt',sans-serif; font-weight:700; font-size:14px; padding:10px 24px; border-radius:999px; background:var(--accent); color:#05060a; }
+  .hd-legend{ display:flex; flex-wrap:wrap; gap:14px; justify-content:center; margin-top:14px; font-size:12.5px; color:var(--muted); }
+  .hd-legend span{ display:flex; align-items:center; gap:6px; }
+  .hd-legend i{ width:10px; height:10px; border-radius:3px; display:inline-block; }
+
+  .compare-grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:18px 0 0; }
+  .compare-card{ border-radius:14px; padding:20px; border:1px solid var(--border); background:var(--panel); }
+  .compare-card.weak{ border-color:rgba(255,84,112,.4); background:rgba(255,84,112,.06); }
+  .compare-card.strong{ border-color:rgba(33,230,161,.4); background:rgba(33,230,161,.06); }
+  .compare-label{ font-family:'Prompt',sans-serif; font-weight:700; font-size:12px; text-transform:uppercase; letter-spacing:.03em; padding:4px 12px; border-radius:999px; display:inline-block; margin-bottom:12px; }
+  .compare-label.weak{ color:var(--code); background:rgba(255,84,112,.18); }
+  .compare-label.strong{ color:var(--gs); background:rgba(33,230,161,.18); }
+  .compare-card h5{ margin:0 0 8px; font-size:16px; font-family:'Prompt',sans-serif; color:var(--text); }
+  .compare-card p{ font-size:14.5px; margin:0 0 8px; color:#c6ccd8; line-height:1.6; }
+  .compare-card ul{ margin:0; padding-inline-start:18px; font-size:14px; color:#c6ccd8; }
+  .compare-card li{ margin-bottom:6px; }
+
+  .analysis-box{ background:rgba(0,255,255,.06); border-left:3px solid var(--cyan); border-radius:0 12px 12px 0; padding:14px 18px; margin:16px 0 24px; font-size:14.5px; color:#dfe4ee; }
+  .analysis-box b{ color:var(--cyan); }
+  .analysis-box summary{ cursor:pointer; font-family:'Prompt',sans-serif; font-weight:700; color:var(--cyan); font-size:14.5px; }
+  .analysis-box[open] summary{ margin-bottom:10px; }
+
+  .hd-frame-sm{ min-height:170px; padding:18px 14px; gap:6px; }
+  .hd-frame-sm .hd-headline{ font-size:19px; max-width:100%; }
+  .hd-frame-sm .hd-sub{ font-size:12.5px; max-width:100%; }
+  .hd-frame-sm .hd-btn{ font-size:12px; padding:7px 16px; margin-top:6px; }
+  .hd-frame-sm .hd-tag{ font-size:9.5px; padding:2px 7px; }
+
+  .tree{ font-size:14px; }
+  .tree .node{ background:rgba(255,255,255,.05); border:1px solid var(--border); border-radius:8px; padding:6px 10px; margin:4px 0; display:inline-block; }
+  .tree .branch{ padding-inline-start:18px; border-left:1px dashed var(--border); margin-inline-start:8px; }
+
+  .navmock{ display:flex; flex-wrap:wrap; gap:7px; }
+  .navmock span{ background:rgba(255,255,255,.06); border:1px solid var(--border); border-radius:999px; padding:6px 12px; font-size:12.5px; color:#dfe4ee; white-space:nowrap; }
+  .compare-card.weak .navmock span{ border-color:rgba(255,84,112,.3); }
+  .compare-card.strong .navmock span{ border-color:rgba(33,230,161,.3); }
+
+  @media (max-width:700px){
+    .compare-grid{ grid-template-columns:1fr; }
+  }
+
+  .respdemo{ background:var(--panel); border:1px solid var(--border); border-radius:18px; padding:22px; margin:20px 0 28px; }
+  .respdemo-toolbar{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px; }
+  .respdemo-btn{ font-family:'Prompt',sans-serif; font-weight:700; font-size:13.5px; padding:9px 16px; border-radius:999px; border:1px solid var(--border); background:rgba(255,255,255,.03); color:var(--muted); cursor:pointer; transition:all .2s ease; }
+  .respdemo-btn:hover{ border-color:var(--accent); color:var(--text); }
+  .respdemo-btn.active{ background:var(--accent); border-color:var(--accent); color:#05060a; }
+  .respdemo-size{ font-family:'Prompt',sans-serif; font-size:13px; font-weight:700; color:var(--cyan); margin-bottom:16px; }
+  .respdemo-viewport{ display:flex; justify-content:center; padding:24px 12px; background:radial-gradient(circle at 50% 0%, rgba(255,255,255,.04), transparent 60%); border-radius:14px; overflow-x:auto; }
+  .respdemo-frame{ width:260px; border-radius:22px; border:3px solid #2a2f3d; background:linear-gradient(165deg,#1a1d29,#0e0f16); box-shadow:0 20px 50px rgba(0,0,0,.4); overflow:hidden; transition:width .45s cubic-bezier(.4,0,.2,1); position:relative; flex:none; }
+  .respdemo-notch{ height:14px; background:#2a2f3d; border-radius:0 0 10px 10px; width:70px; margin:0 auto; transition:opacity .2s ease; }
+  .rd-hero{ padding:26px 18px 22px; display:flex; flex-direction:column; align-items:center; text-align:center; gap:8px; min-height:220px; justify-content:center; }
+  .hd-tag.rd-tag-img{ position:static; margin-bottom:6px; }
+  .rd-headline{ font-family:'Prompt',sans-serif; font-weight:800; color:#fff; font-size:16px; transition:font-size .3s ease; }
+  .rd-sub{ font-size:12px; color:#c6ccd8; transition:font-size .3s ease; }
+  .rd-btn{ margin-top:6px; font-family:'Prompt',sans-serif; font-weight:700; font-size:11.5px; padding:8px 18px; border-radius:999px; background:var(--accent); color:#05060a; transition:all .3s ease; }
+  .respdemo-note{ margin-top:14px; font-size:13.5px; color:#dfe4ee; background:rgba(255,255,255,.03); border-left:3px solid var(--accent); border-radius:0 10px 10px 0; padding:10px 14px; min-height:44px; }
+  .respdemo-hint{ margin:10px 0 0; font-size:12.5px; color:var(--muted); }
+
+  .respdemo[data-device="tablet"] .respdemo-frame{ width:420px; }
+  .respdemo[data-device="desktop"] .respdemo-frame{ width:640px; }
+  .respdemo[data-device="tablet"] .rd-headline{ font-size:21px; }
+  .respdemo[data-device="desktop"] .rd-headline{ font-size:27px; }
+  .respdemo[data-device="tablet"] .rd-sub{ font-size:14px; }
+  .respdemo[data-device="desktop"] .rd-sub{ font-size:16px; }
+  .respdemo[data-device="tablet"] .rd-btn{ font-size:13px; padding:9px 22px; }
+  .respdemo[data-device="desktop"] .rd-btn{ font-size:14.5px; padding:11px 28px; }
+  .respdemo[data-device="mobile"] .rd-btn{ width:100%; }
+  .respdemo[data-device="tablet"] .respdemo-notch,
+  .respdemo[data-device="desktop"] .respdemo-notch{ opacity:0; }
+
+  @media (max-width:700px){
+    .respdemo[data-device="desktop"] .respdemo-frame{ width:100%; max-width:640px; }
+  }
+
+  .pgrid{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:16px 0 20px; }
+  .pgrid-card{ background:var(--panel); border:1px solid var(--border); border-radius:14px; overflow:hidden; }
+  .pgrid-img{ height:100px; background:linear-gradient(135deg,#1a1d29,#0e0f16); display:flex; align-items:center; justify-content:center; color:var(--muted); font-size:12px; }
+  .pgrid-body{ padding:14px; }
+  .pgrid-title{ font-family:'Prompt',sans-serif; font-weight:700; font-size:14.5px; color:var(--text); margin-bottom:4px; }
+  .pgrid-price{ font-size:13px; color:var(--accent); font-weight:700; margin-bottom:10px; }
+  .pgrid-btn{ display:inline-block; font-family:'Prompt',sans-serif; font-weight:700; font-size:12px; padding:7px 16px; border-radius:999px; background:var(--accent); color:#05060a; }
+  @media (max-width:700px){ .pgrid{ grid-template-columns:1fr 1fr; } }
+
+  .pager{ display:flex; justify-content:space-between; gap:16px; margin-top:48px; padding-top:24px; border-top:1px solid var(--border); }
+  .pager a{ font-family:'Prompt',sans-serif; font-weight:600; font-size:15px; padding:12px 18px; border:1px solid var(--border); border-radius:12px; color:var(--text); }
+  .pager a:hover{ border-color:var(--accent); color:var(--accent); }
+  .pager .disabled{ opacity:.35; pointer-events:none; }
+
+  footer{ max-width:920px; margin:0 auto; padding:24px; text-align:center; color:var(--muted); font-size:13px; }
+
+  @media (max-width:700px){
+    .segnav{ display:none; }
+    h1{ font-size:30px; }
+    body{ font-size:16.5px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <a class="back" href="../index.html">← กลับหน้าแรก</a>
+    <nav class="segnav">
+      <a href="#s1">ช่วง 1</a>
+      <a href="#s2">ช่วง 2</a>
+      <a href="#s3">ช่วง 3</a>
+      <a href="#s4">ช่วง 4</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="eyebrow">
+    <span class="badge-num">ครั้งที่ 1</span>
+    <span class="badge-meta">120 นาที</span>
+    <span class="badge-meta">·</span>
+    <span class="badge-meta" style="color:var(--accent)">Google Sites</span>
+  </div>
+  <h1>วางแผนธุรกิจ, Sitemap และเริ่มสร้างหน้า Home (Hero Section) จริง</h1>
+  <div class="obj-box">
+    <h4>สิ่งที่จะได้หลังจบครั้งนี้</h4>
+    <ul><li>เลือกประเภทธุรกิจและกลุ่มเป้าหมายของเว็บตนเองได้ชัดเจน</li><li>วาด Sitemap อย่างน้อย 4 หน้าหลักตามหลัก Information Architecture</li><li>เขียนประโยค Hook / Value Proposition สำหรับหน้าแรกได้</li><li>เปิดเว็บไซต์จริงบน Google Sites และสร้าง Hero Section เสร็จอย่างน้อย 1 หน้า</li></ul>
+  </div>
+  
+  <div class="deliverable-box">
+    <span class="dl-icon">🎯</span>
+    <div>
+      <h4>ผลงานที่ต้องได้วันนี้</h4>
+      <p>เว็บไซต์ Publish แล้วอย่างน้อย 1 ลิงก์ มีหน้า Home ที่มี Hero Section ครบ (Header แบบ Large banner + Title + Subtitle ตามสูตร Hook)</p>
+    </div>
+  </div>
+</div>
+
+<div class="section-wrap">
+  
+    <section class="segment" id="s1">
+      <div class="segment-head">
+        <span class="segment-time">15 นาที</span>
+        <h2>ช่วงที่ 1 · Recap & Warm-up</h2>
+      </div>
+      <div class="segment-body">
+        <p>แนะนำรายวิชาแบบรวบรัด — คอร์สนี้ 10 ครั้งจะพาไปสร้างเว็บไซต์ธุรกิจของตัวเองให้เสร็จและได้นำเสนอจริง โดยข้ามเนื้อหาปฐมนิเทศ Google Sites และทฤษฎี Domain/Hosting เพราะถือว่ามีพื้นฐานนี้อยู่แล้ว</p>
+<div class="callout info"><span class="callout-icon">💡</span><div>คำถามนำก่อนเริ่ม: ลองนึกถึงเว็บไซต์ธุรกิจที่คุณเคยเข้าแล้ว <b>อยู่ต่อ</b> กับเว็บที่เข้าแล้ว <b>ปิดออกทันที</b> — อะไรคือความแตกต่าง?</div></div>
+<p>เป้าหมายของครั้งที่ 1: จบคาบนี้ทุกคนต้องมีเว็บไซต์ที่ Publish แล้วอย่างน้อย 1 ลิงก์ แม้จะมีแค่หน้า Home ก็ตาม</p>
+      </div>
+    </section>
+
+    <section class="segment" id="s2">
+      <div class="segment-head">
+        <span class="segment-time">25 นาที</span>
+        <h2>ช่วงที่ 2 · Demo & Concept</h2>
+      </div>
+      <div class="segment-body">
+        <h3>1. เลือกประเภทธุรกิจและกลุ่มเป้าหมาย</h3>
+<p>ก่อนออกแบบเว็บ ต้องตอบ 3 คำถามนี้ให้ได้ก่อน เพราะคำตอบจะกำหนดทุกอย่างที่ตามมา ตั้งแต่ Sitemap ไปจนถึงสีและรูปภาพที่ใช้</p>
+<div class="table-wrap"><table><thead><tr><th>คำถาม</th><th>ตัวอย่างคำตอบ</th></tr></thead>
+        <tbody><tr><td>เราขายอะไร</td><td>สินค้า / บริการ / คอร์สเรียน / งานฝีมือ / พอร์ตผลงาน</td></tr><tr><td>ใครคือลูกค้า</td><td>ช่วงอายุ เพศ ไลฟ์สไตล์ และปัญหาที่เขากำลังเจอ</td></tr><tr><td>ทำไมต้องเลือกเรา</td><td>จุดต่างจากคู่แข่ง เช่น ราคา คุณภาพ ความเร็ว ความเป็นกันเอง</td></tr></tbody></table></div>
+<div class="table-wrap"><table><thead><tr><th>ประเภทธุรกิจหลัก</th><th>เป้าหมายเว็บไซต์</th><th>จุดที่ต้องเน้น</th><th>ตัวอย่างข้อความปุ่มหลัก</th></tr></thead>
+        <tbody><tr><td>🛍️ E-Commerce (ขายสินค้า)</td><td>ปิดการขายทันทีในเว็บ</td><td>หน้า Products/Gallery, โปรโมชัน</td><td>“สั่งเลย” / “ช้อปเลย”</td></tr><tr><td>🤝 Service &amp; Lead (บริการ/นัดหมาย)</td><td>เก็บข้อมูลติดต่อไว้ปิดการขายทีหลัง</td><td>หน้า Services + Booking, ฟอร์มขอราคา, Portfolio</td><td>“นัดคุยงานฟรี” / “ขอใบเสนอราคา”</td></tr><tr><td>🏢 Corporate/B2B (องค์กร)</td><td>สร้างความน่าเชื่อถือ/ภาพลักษณ์</td><td>วิสัยทัศน์, ข่าวสาร, รับสมัครงาน</td><td>“ดูข้อมูลบริษัท” / “ติดต่อฝ่ายขาย”</td></tr><tr><td>🎓 Education (คอร์สเรียน)</td><td>ให้สมัคร/ลงทะเบียนเรียน</td><td>สารบัญคอร์ส, วิดีโอตัวอย่างฟรี, รีวิว</td><td>“ทดลองเรียนฟรี” / “สมัครเลย”</td></tr></tbody></table></div>
+<p>ลองคลิกดูตัวอย่างเว็บไซต์จริงแต่ละประเภท สังเกตโครงสร้าง Hero Section ตำแหน่งปุ่ม และโทนสีที่ใช้ (เปิดในแท็บใหม่):</p>
+<div class="table-wrap"><table><thead><tr><th>ประเภท</th><th>เว็บไซต์ตัวอย่าง</th></tr></thead>
+        <tbody><tr><td>E-Commerce</td><td><a href="https://shopee.co.th" target="_blank" rel="noopener">Shopee Thailand</a> · <a href="https://www.pomelofashion.com" target="_blank" rel="noopener">Pomelo Fashion</a> · <a href="https://www.apple.com/th" target="_blank" rel="noopener">Apple Store TH</a></td></tr><tr><td>Service &amp; Lead</td><td><a href="https://fastwork.co" target="_blank" rel="noopener">Fastwork</a> · <a href="https://www.designil.com" target="_blank" rel="noopener">Designil</a> · <a href="https://www.agoda.com" target="_blank" rel="noopener">Agoda</a></td></tr><tr><td>Corporate/B2B</td><td><a href="https://www.scg.com" target="_blank" rel="noopener">SCG Group</a> · <a href="https://www.thaiairways.com" target="_blank" rel="noopener">Thai Airways</a></td></tr><tr><td>Education</td><td><a href="https://www.skooldio.com" target="_blank" rel="noopener">Skooldio</a> · <a href="https://www.coursera.org" target="_blank" rel="noopener">Coursera</a></td></tr></tbody></table></div>
+<p>ลองวิเคราะห์ด้วยกัน: ร้านเบเกอรี่ 2 ร้านนี้ต่างกันอย่างไร และร้านไหนน่าจะขายดีกว่ากัน</p>
+
+        <div class="compare-grid">
+          <div class="compare-card weak">
+            <span class="compare-label weak">🚫 กำหนดกลุ่มเป้าหมายอ่อน</span>
+            <h5>ร้านเบเกอรี่ A</h5>
+            <p><b>ขายอะไร:</b> ขนมอบทุกชนิด</p>
+            <p><b>ลูกค้า:</b> ทุกคน (ไม่ระบุเจาะจง)</p>
+            <p><b>จุดต่าง:</b> อร่อย คุณภาพดี ราคาย่อมเยา</p>
+          </div>
+          <div class="compare-card strong">
+            <span class="compare-label strong">✅ กำหนดกลุ่มเป้าหมายชัด</span>
+            <h5>ร้านเบเกอรี่ B</h5>
+            <p><b>ขายอะไร:</b> ขนมอบสูตรไร้กลูเตน</p>
+            <p><b>ลูกค้า:</b> คนแพ้กลูเตนและสายมังสวิรัติในย่านนั้น</p>
+            <p><b>จุดต่าง:</b> ทำสดทุกเช้า ไม่ใช้แป้งสาลี รับรองปลอดภัยสำหรับคนแพ้</p>
+          </div>
+        </div>
+        <div class="analysis-box"><b>จุดสังเกต:</b> ร้าน A พยายามเอาใจทุกคน สุดท้ายข้อความจะกว้างจนไม่มีใครรู้สึกว่า “นี่พูดถึงฉัน” ส่วนร้าน B เจาะกลุ่มแคบแต่ชัด ทำให้เขียน Hook, เลือกภาพ และออกแบบเว็บได้ง่ายกว่ามากในขั้นตอนถัดไป — ยิ่งเจาะจง ยิ่งเขียนคอนเทนต์ง่าย</div>
+<h3>2. หลักการทำ Sitemap (Hub and Spoke)</h3>
+<p>ให้หน้า Home เป็นศูนย์กลาง (Hub) แล้วแตกแขนง (Spoke) ไปยังหน้าหลักอื่นๆ ไม่ควรเกิน 4–6 หน้าหลัก เพื่อไม่ให้เมนูรกและผู้ใช้สับสน</p>
+<ul class="list"><li>หน้ามาตรฐานของเว็บธุรกิจขนาดเล็ก: <b>Home → About Us → Products/Services → Contact Us</b></li><li>ตั้งชื่อเมนูด้วยคำที่ผู้ใช้คุ้นเคย เช่น “เกี่ยวกับเรา” ไม่ใช่ “เรื่องราวของเรา”</li><li>เพิ่มหน้าเสริมได้ภายหลังถ้าจำเป็น เช่น Gallery, FAQ, Testimonials</li></ul>
+<p>ลองวิเคราะห์ด้วยกัน: เมนูเว็บไซต์ 2 แบบนี้ แบบไหนใช้งานง่ายกว่ากัน</p>
+
+        <div class="compare-grid">
+          <div class="compare-card weak">
+            <span class="compare-label weak">🚫 เมนูรก ชื่อกำกวม</span>
+            <div class="navmock">
+              <span>Home</span><span>Our Journey</span><span>What We Believe</span><span>The Experience</span><span>Get Involved</span><span>Media Corner</span><span>Partnerships</span><span>Resources</span><span>Connect</span>
+            </div>
+          </div>
+          <div class="compare-card strong">
+            <span class="compare-label strong">✅ เมนูเรียบ ชื่อคุ้นเคย</span>
+            <div class="navmock">
+              <span>Home</span><span>About Us</span><span>Products</span><span>Contact Us</span>
+            </div>
+          </div>
+        </div>
+        <div class="analysis-box"><b>จุดสังเกต:</b> เมนูซ้ายมี 9 รายการและตั้งชื่อแบบพยายามสร้างสรรค์ (“The Experience”, “Media Corner”) ทำให้ผู้ใช้ต้องหยุดคิดว่าแต่ละเมนูคืออะไร ส่วนเมนูขวาแค่ 4 รายการและใช้คำที่ทุกคนคุ้นเคยทันที — ผู้ใช้เว็บใช้เวลาตัดสินใจน้อยกว่า 1 วินาทีต่อการคลิกเมนู ชื่อที่ต้องตีความจึงเป็นอุปสรรคเสมอ</div>
+<h3>3. Hero Section คืออะไร และมีองค์ประกอบอะไรบ้าง</h3>
+<p>Hero Section คือบล็อกภาพขนาดใหญ่บนสุดของหน้า Home ที่ผู้เข้าชมเห็นเป็นอย่างแรกก่อนเลื่อนลงไปดูเนื้อหาอื่น เปรียบเสมือน “ป้ายหน้าร้าน” ในโลกดิจิทัล ปกติจะวางอยู่บนสุดของหน้าแรก ประกอบด้วยภาพหรือวิดีโอขนาดใหญ่ ข้อความหัวเรื่องเด่นๆ และปุ่มกระตุ้นการกระทำ หน้าที่ของมันคือสร้างความประทับใจแรก สื่อสารใจความสำคัญของเว็บ และนำทางผู้ใช้ไปสู่ขั้นตอนถัดไป</p>
+<p>เหตุผลที่ Hero Section สำคัญขนาดนี้ เพราะมันคือด่านแรกของเส้นทางการตัดสินใจของลูกค้า (Customer Journey) ซึ่งมี 3 ระยะ:</p>
+<div class="table-wrap"><table><thead><tr><th>ระยะ</th><th>พฤติกรรมลูกค้า</th><th>หน้าที่ของเว็บไซต์</th></tr></thead>
+        <tbody><tr><td>1. Discovery (แรกเห็น)</td><td>ตัดสินใจเร็วมากว่าจะอ่านต่อหรือปิดเว็บ</td><td><b>Hero Section ต้องมี Hook ชัดเจน</b> — วันนี้เราโฟกัสระยะนี้เป็นหลัก</td></tr><tr><td>2. Consideration (พิจารณา)</td><td>เลื่อนดูข้อมูลหาเหตุผลสนับสนุนการตัดสินใจ</td><td>ภาพ/การ์ดจุดเด่นสินค้าและรีวิว (Social Proof) — จะเพิ่มในครั้งที่ 2</td></tr><tr><td>3. Decision (ตัดสินใจ)</td><td>พร้อมจะติดต่อหรือจ่ายเงิน</td><td>ปุ่ม CTA ที่ชัดเจน — เริ่มสอนวันนี้ ขยายเพิ่มครั้งที่ 2</td></tr></tbody></table></div>
+<div class="callout info"><span class="callout-icon">💡</span><div>วันนี้เราสร้างให้ครบแค่ระยะ <b>Discovery</b> เพราะ Hero Section คือด่านแรกที่ตัดสินว่าลูกค้าจะอยู่ต่อหรือปิดเว็บหนี ส่วนระยะ Consideration และ Decision จะขยายเพิ่มในครั้งที่ 2 ตอนสร้างหน้า About Us และ Products/Services</div></div>
+
+        <div class="hero-diagram">
+          <div class="hd-frame">
+            <span class="hd-tag hd-visual-tag">1 · Visual</span>
+            <span class="hd-tag hd-headline-tag">2 · Headline</span>
+            <span class="hd-tag hd-sub-tag">3 · Subheading</span>
+            <span class="hd-tag hd-cta-tag">4 · CTA</span>
+            <div class="hd-headline">ขนมโฮมเมดสั่งทำ</div>
+            <div class="hd-sub">สำหรับคนรักสุขภาพ อร่อยได้โดยไม่ต้องกังวลน้ำตาล</div>
+            <div class="hd-btn">สั่งเลย →</div>
+          </div>
+          <div class="hd-legend">
+            <span><i style="background:#00ffff"></i>1. Visual — ภาพ/วิดีโอพื้นหลัง</span>
+            <span><i style="background:#21e6a1"></i>2. Headline — หัวเรื่องหลัก (Hook)</span>
+            <span><i style="background:#3aa0ff"></i>3. Subheading — ข้อความเสริม</span>
+            <span><i style="background:#ff5470"></i>4. CTA — ปุ่มกระตุ้นการกระทำ</span>
+          </div>
+        </div>
+<div class="table-wrap"><table><thead><tr><th>องค์ประกอบ</th><th>หน้าที่</th></tr></thead>
+        <tbody><tr><td>1. Visual (ภาพ/วิดีโอพื้นหลัง)</td><td>สื่ออารมณ์และตัวตนของแบรนด์ ต้องเสริมข้อความ ไม่แย่งความสนใจจากข้อความ</td></tr><tr><td>2. Headline (หัวเรื่อง/Hook)</td><td>บอก Value Proposition หลักภายในไม่กี่วินาที ตอบคำถาม “แล้วฉันจะได้อะไร”</td></tr><tr><td>3. Subheading (ข้อความเสริม)</td><td>ขยายความ Headline ให้ชัดขึ้น สั้นและกระชับ</td></tr><tr><td>4. Call-to-Action (ปุ่ม CTA)</td><td>บอกผู้ใช้ว่าต้องทำอะไรต่อ ควรมีปุ่มหลักเพียงปุ่มเดียวเพื่อไม่ให้ลังเล</td></tr></tbody></table></div>
+<p>ลองวิเคราะห์ด้วยกัน: Hero Section 2 แบบนี้ แบบไหนทำให้คุณอยากอ่านต่อและกดปุ่มมากกว่ากัน</p>
+
+        <div class="compare-grid">
+          <div class="compare-card weak">
+            <span class="compare-label weak">🚫 Hero อ่อน</span>
+            <div class="hd-frame hd-frame-sm">
+              <span class="hd-tag hd-headline-tag" style="top:8px">ข้อความยาว</span>
+              <div class="hd-headline" style="font-size:17px">ยินดีต้อนรับสู่เว็บไซต์ของเรา เรามีสินค้าคุณภาพดีมากมายให้คุณได้เลือกสรร</div>
+              <div class="hd-sub">เรามุ่งมั่นให้บริการลูกค้าทุกท่านด้วยความใส่ใจในทุกรายละเอียด</div>
+              <div style="display:flex; gap:8px; margin-top:8px;">
+                <div class="hd-btn" style="background:#555;color:#fff">ดูเพิ่มเติม</div>
+                <div class="hd-btn" style="background:#555;color:#fff">ติดต่อเรา</div>
+              </div>
+            </div>
+          </div>
+          <div class="compare-card strong">
+            <span class="compare-label strong">✅ Hero แข็งแรง</span>
+            <div class="hd-frame hd-frame-sm">
+              <div class="hd-headline">ขนมโฮมเมดสั่งทำ</div>
+              <div class="hd-sub">สำหรับคนรักสุขภาพ อร่อยได้โดยไม่ต้องกังวลน้ำตาล</div>
+              <div class="hd-btn">สั่งเลย →</div>
+            </div>
+          </div>
+        </div>
+        <div class="analysis-box"><b>จุดสังเกต:</b> ฝั่งซ้ายมีปัญหา 3 อย่างพร้อมกัน — (1) Headline ยาวเกินไป อ่านไม่ทันภายในไม่กี่วินาที (2) ข้อความกว้างๆ ไม่บอกว่าขายอะไรจริงๆ (3) มีปุ่ม 2 ปุ่มน้ำหนักเท่ากัน ทำให้ผู้ใช้ลังเลว่าจะกดปุ่มไหน ฝั่งขวาแก้ครบทั้ง 3 จุด: Headline สั้นตรงประเด็น, Subheading บอกกลุ่มเป้าหมายและประโยชน์ชัดเจน, และมี CTA เดียวที่โดดเด่น</div>
+<h3>หลักการออกแบบ Hero Section ให้ได้ผล</h3>
+<ul class="list"><li><b>เรียบง่ายเข้าไว้</b> — อย่ายัดทุกข้อมูลลงในบล็อกเดียว โฟกัสสารสำคัญที่สุดเรื่องเดียว ใช้พื้นที่ว่าง (white space) ช่วยดึงสายตา</li><li><b>ภาพคุณภาพสูง แนวนอน ไม่เกิน 2048px</b> — Google Sites จำกัดภาพ Header ไว้ที่ 2048 พิกเซล (ด้านที่ยาวที่สุด) อัปโหลดใหญ่กว่านี้ระบบจะบีบให้อัตโนมัติ ควรเลือกภาพแนวนอน (Landscape) เพราะ Header เป็นแถบกว้างเตี้ย ภาพแนวตั้งจะถูกซูม/ครอปเยอะจนเสียองค์ประกอบ</li><li><b>จุดสำคัญอยู่กลางภาพ</b> — Google Sites จะครอปภาพจากกึ่งกลางเสมอเวลาปรับขนาดตามหน้าจอ ให้เก็บสินค้า/โลโก้/ใบหน้าไว้กลางภาพ หลีกเลี่ยงรายละเอียดสำคัญที่ขอบภาพ</li><li><b>คอนทราสต์ต้องพอ</b> — ถ้าวางข้อความทับภาพ ให้ใช้ Gradient Overlay สีเข้มทับภาพเพื่อให้อ่านตัวอักษรออกชัดเจน</li><li><b>พิมพ์ข้อความลงกล่องข้อความเสมอ ไม่ฝังลงในไฟล์รูป</b> — Title/Subtitle ต้องพิมพ์ในกล่องข้อความของ Google Sites (ตามที่จะทำในขั้นตอนถัดไป) เพราะข้อความจะปรับขนาด/ตัดบรรทัดอัตโนมัติตามหน้าจอ ไม่มีวันโดนตัดขาด ต่างจากถ้าฝังตัวอักษรลงในไฟล์รูป ซึ่งจะถูกครอปหายไปตามภาพ</li><li><b>CTA เดียว ชัดเจน</b> — ปุ่มเดียวที่โดดเด่นด้วยสีตัดกับพื้นหลัง ดีกว่าหลายปุ่มที่แข่งกันเอง (หลัก Hick's Law: ยิ่งตัวเลือกเยอะ คนยิ่งตัดสินใจช้าลง) เขียนข้อความปุ่มด้วยสูตร <b>Action + Benefit</b> เช่น “สั่งเลย รับส่วนลด 10%” แทนคำทื่อๆ อย่าง “คลิกที่นี่”</li><li><b>ออกแบบให้รองรับมือถือ</b> — บนจอเล็กควรเหลือแค่ Headline สั้นๆ + CTA เดียว ตัดองค์ประกอบที่ไม่จำเป็นออก</li><li><b>โหลดเร็ว</b> — 3 วินาทีแรกสำคัญที่สุด ควรบีบอัดภาพให้ไฟล์เล็กเพื่อให้ Hero Section แสดงผลได้ทันที</li></ul>
+<div class="table-wrap"><table><thead><tr><th>🚫 จุดที่ทำให้ลูกค้าปิดเว็บหนี</th><th>✅ ตัวช่วยเพิ่มความน่าเชื่อถือ</th></tr></thead>
+        <tbody><tr><td>ไม่รู้ว่าเว็บนี้ขายอะไรใน 3 วินาทีแรก</td><td>Headline ตรงไปตรงมา + ภาพสินค้า/บริการเด่นชัด</td></tr><tr><td>หาปุ่มสั่งซื้อ/ติดต่อไม่เจอ</td><td>สีปุ่ม CTA ตัดกับพื้นหลังชัดเจน วางในตำแหน่งที่เห็นง่าย</td></tr><tr><td>ฟอร์มยาวเกินไป ถามข้อมูลจุกจิก</td><td>เหลือแค่ฟิลด์ที่จำเป็นจริงๆ (ชื่อ, ช่องทางติดต่อ)</td></tr></tbody></table></div>
+<div class="callout bad"><span class="callout-icon">🚫</span><div>ข้อผิดพลาดที่พบบ่อย: ใส่ข้อความยาวเกินไปจนอ่านไม่ทัน, ใช้ภาพพื้นหลังที่ไม่เกี่ยวกับธุรกิจ, มีปุ่ม CTA มากกว่า 1 ปุ่มที่สำคัญเท่ากัน ทำให้ผู้ใช้ลังเลว่าจะกดปุ่มไหน</div></div>
+<h3>4. การเขียน Headline/Hook ให้โดนใจ</h3>
+<p>งานวิจัยด้าน UX ของ Nielsen Norman Group ชี้ว่าผู้ใช้ตัดสินใจเบื้องต้นว่าจะอยู่ต่อหรือออกจากเว็บไซต์ โดยได้รับอิทธิพลอย่างมากจากภาพรวมการออกแบบภาพ (visual design) ตั้งแต่ไม่กี่วินาทีแรกที่เห็นหน้าแรก ก่อนที่จะเริ่มอ่านเนื้อหาอย่างละเอียดด้วยซ้ำ Headline ใน Hero Section จึงต้องสื่อสารให้ชัดที่สุดโดยใช้เวลาอ่านน้อยที่สุด</p>
+<div class="callout good"><span class="callout-icon">✅</span><div><b>สูตร Hook:</b> [สิ่งที่คุณขาย] + [สำหรับใคร] + [ประโยชน์หลักที่ได้รับ]<br>ตัวอย่าง: “ขนมโฮมเมดสั่งทำ สำหรับคนรักสุขภาพ ที่อร่อยได้โดยไม่ต้องกังวลน้ำตาล”</div></div>
+<div class="table-wrap"><table><thead><tr><th>Hook ที่ยังไม่ดี</th><th>Hook ที่ปรับแล้ว</th></tr></thead>
+        <tbody><tr><td>ยินดีต้อนรับสู่เว็บไซต์ของเรา</td><td>ขนมโฮมเมดสั่งทำ อร่อยได้โดยไม่ต้องกังวลน้ำตาล</td></tr><tr><td>เราคือทีมงานมืออาชีพ</td><td>ตัดผมด่วน 30 นาที จองคิวออนไลน์ ไม่ต้องรอ</td></tr><tr><td>สินค้าคุณภาพดี ราคาถูก</td><td>กระเป๋าหนังแท้ ทำมือทีละใบ ส่งฟรีทั่วประเทศ</td></tr></tbody></table></div>
+<details class="analysis-box"><summary>💡 จุดสังเกตของทั้ง 3 คู่ (กดเพื่อดู)</summary>
+          <p style="margin:0 0 8px">คู่ที่ 1: “ยินดีต้อนรับ” เป็นประโยคที่ใช้ได้กับเว็บไหนก็ได้ ไม่บอกอะไรเกี่ยวกับธุรกิจเลย ส่วนฝั่งขวาระบุสินค้าและประโยชน์ทันที</p>
+          <p style="margin:0 0 8px">คู่ที่ 2: “มืออาชีพ” เป็นคำที่ทุกร้านอ้างได้ ไม่มีหลักฐาน ฝั่งขวาให้ตัวเลขจับต้องได้ (30 นาที) ที่พิสูจน์ความมืออาชีพแทนการบอกตรงๆ</p>
+          <p style="margin:0">คู่ที่ 3: “คุณภาพดี ราคาถูก” กว้างและวัดไม่ได้ ฝั่งขวาให้รายละเอียดเฉพาะ (หนังแท้ ทำมือ ส่งฟรี) ที่ทำให้เชื่อถือได้มากกว่า</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="segment" id="s3">
+      <div class="segment-head">
+        <span class="segment-time">60 นาที</span>
+        <h2>ช่วงที่ 3 · Hands-on Practice</h2>
+      </div>
+      <div class="segment-body">
+        <p>ลงมือทำตามลำดับ 4 ขั้นตอนนี้ให้ครบภายในคาบ — ทำ Worksheet ก่อน แล้วค่อยเปิด Google Sites</p>
+<div class="worksheet">
+        <div class="worksheet-title">📝 Worksheet 1: เลือกธุรกิจของฉัน</div>
+        <label class="ws-field"><span>ธุรกิจของฉันคือ</span><input id="ws-1-1-0" data-ws type="text" placeholder="เช่น ร้านขนมโฮมเมดสั่งทำ"></label><label class="ws-field"><span>ลูกค้าของฉันคือใคร</span><input id="ws-1-1-1" data-ws type="text" placeholder="เช่น คนวัยทำงานที่รักสุขภาพ อายุ 25-40 ปี"></label><label class="ws-field"><span>จุดต่างจากคู่แข่ง</span><textarea id="ws-1-1-2" data-ws rows="2" placeholder="เช่น ใช้สารให้ความหวานแทนน้ำตาลทุกเมนู"></textarea></label>
+        <div class="ws-save-note" data-ws-note>บันทึกอัตโนมัติในเบราว์เซอร์นี้</div>
+      </div>
+<div class="worksheet">
+        <div class="worksheet-title">📝 Worksheet 2: วาด Sitemap (อย่างน้อย 4 หน้า)</div>
+        <label class="ws-field"><span>หน้า Home — สรุปสั้นๆ ว่าจะมีอะไร</span><input id="ws-1-2-0" data-ws type="text" placeholder="Hero Section + จุดเด่นสินค้า"></label><label class="ws-field"><span>หน้าที่ 2</span><input id="ws-1-2-1" data-ws type="text" placeholder="เช่น About Us"></label><label class="ws-field"><span>หน้าที่ 3</span><input id="ws-1-2-2" data-ws type="text" placeholder="เช่น Products/Services"></label><label class="ws-field"><span>หน้าที่ 4</span><input id="ws-1-2-3" data-ws type="text" placeholder="เช่น Contact Us"></label>
+        <div class="ws-save-note" data-ws-note>บันทึกอัตโนมัติในเบราว์เซอร์นี้</div>
+      </div>
+<div class="worksheet">
+        <div class="worksheet-title">📝 Worksheet 3: เขียน Hook สำหรับ Hero Section</div>
+        <label class="ws-field"><span>ชื่อแบรนด์ (Title)</span><input id="ws-1-3-0" data-ws type="text" placeholder="เช่น Sweet Balance"></label><label class="ws-field"><span>ประโยค Hook (Subtitle) — ใช้สูตรจากช่วงที่ 2</span><textarea id="ws-1-3-1" data-ws rows="2" placeholder="[สิ่งที่ขาย] + [สำหรับใคร] + [ประโยชน์หลัก]"></textarea></label>
+        <div class="ws-save-note" data-ws-note>บันทึกอัตโนมัติในเบราว์เซอร์นี้</div>
+      </div>
+<h3>ขั้นตอนที่ 4: เปิด Google Sites และสร้าง Hero Section จริง (จับมือทำทีละคลิก)</h3>
+<div class="callout info"><span class="callout-icon">💡</span><div>ไม่ต้องสอนอินเทอร์เฟซซ้ำทั้งหมดเพราะมีพื้นฐานอยู่แล้ว แต่ขั้นตอนสร้าง Hero Section ด้านล่างนี้ทำตามทีละคลิกได้เลย</div></div>
+<ol class="steps"><li>เข้า <b>sites.google.com</b> คลิกปุ่ม “+” (ไซต์ว่างเปล่า) เพื่อสร้างไซต์ใหม่</li><li>คลิกข้อความ <b>“Enter site name”</b> ที่มุมซ้ายบน แล้วพิมพ์ชื่อแบรนด์จาก Worksheet 3</li><li>เอาเมาส์ไป <b>ชี้ที่ Header</b> (พื้นที่ภาพใหญ่ด้านบนสุดของหน้า Home) จะมีปุ่ม <b>“Header type”</b> ปรากฏขึ้น — คลิกแล้วเลือก <b>Large banner</b></li><li>ชี้ที่ Header อีกครั้ง คลิกปุ่ม <b>“Change image”</b> → เลือก Upload หรือ Select image → อัปโหลดภาพพื้นหลังที่เกี่ยวกับธุรกิจ (ถ้ายังไม่มีภาพ ข้ามขั้นตอนนี้ไปก่อน ใช้สีพื้นแทน จะมาทำภาพจริงในครั้งที่ 4-6) — เลือกภาพแนวนอน ไม่เกิน 2048px และมีจุดสำคัญอยู่กลางภาพตามที่เรียนไปข้างต้น</li><li>คลิกที่ข้อความ <b>Title</b> บน Header โดยตรง (กล่องเดียวกับชื่อไซต์ที่พิมพ์ไว้ตอนต้น ข้อความจะกลายเป็นแก้ไขได้ทันที) พิมพ์ชื่อแบรนด์ทับข้อความเดิม</li><li>ยังอยู่ในกล่องข้อความเดิม ให้กด <b>Enter</b> ต่อท้าย Title เพื่อขึ้นบรรทัดใหม่ (นี่คือตำแหน่ง Subtitle — Google Sites ไม่มีกล่อง Subtitle แยกต่างหาก แต่เป็นบรรทัดที่ 2 ในกล่องเดียวกัน) พิมพ์ Hook จาก Worksheet 3 ลงไป แล้วลากคลุมข้อความบรรทัดนี้ เลือกสไตล์ตัวอักษรให้เล็กกว่า Title จากเมนู Format ที่ลอยขึ้นมา (เช่น Subheading หรือ Normal text) เพื่อให้ดูเป็น Subtitle ชัดเจน</li><li>เพิ่มหน้าตาม Sitemap: ที่แถบขวามือคลิกแท็บ <b>Pages</b> → คลิกไอคอน “+” → เลือก New page → พิมพ์ชื่อหน้า (เช่น About Us) → กด Done — ทำซ้ำจนครบตาม Worksheet 2</li><li>(ถ้าทันเวลา) แทรกปุ่ม CTA: ที่แถบขวามือคลิกแท็บ <b>Insert</b> → คลิก <b>Button</b> → พิมพ์ข้อความปุ่มด้วยสูตร Action + Benefit (เช่น “สั่งเลย รับส่วนลด 10%” ไม่ใช่แค่ “คลิกที่นี่”) → ใส่ลิงก์หรือเลือกหน้าเว็บปลายทาง → คลิก Insert แล้วลากปุ่มมาวางใต้ข้อความ Hero</li><li>กดปุ่ม <b>Preview</b> (ไอคอนรูปตา มุมขวาบน) แล้วสลับไอคอนดูมือถือและแท็บเล็ต เช็กว่า Headline ไม่ถูกภาพตัดบัง และยังอ่านออกครบ</li></ol>
+<div class="callout bad"><span class="callout-icon">🚫</span><div>ข้อควรระวัง: หน้า Header ของ Google Sites จะจัดข้อความชิดด้านบนเสมอ (ปรับแนวตั้งกลางไม่ได้) และรูปแบบ Title only จะมีพื้นหลังสีขาวเสมอ — เลือก Large banner หรือ Cover ถ้าต้องการใส่ภาพเต็มพื้นหลัง</div></div>
+<div class="callout info"><span class="callout-icon">💡</span><div>เรื่อง Responsive: Google Sites จัดเลย์เอาต์ Header ให้แสดงผลบนมือถือ/แท็บเล็ต/คอมพิวเตอร์โดยอัตโนมัติอยู่แล้ว ครั้งนี้สอนแค่ <b>“เลือกภาพให้ถูกขนาด/สัดส่วนตั้งแต่แรก”</b> (แนวนอน ไม่เกิน 2048px จุดสำคัญอยู่กลางภาพ) และ <b>เปิด Preview เช็กคร่าวๆ</b> ก็พอ ส่วนเทคนิคการแก้ไขจุดที่ภาพถูกครอปไม่สวยด้วย Photoshop (Focal Point Crop) หรือปรับ Mobile Safe Zone แบบละเอียด จะไปเรียนพร้อมกันในครั้งที่ 9 หลังจากมีทักษะ Photoshop แล้ว</div></div>
+<h3>ลองเอง: Hero Section เดียวกัน แต่แสดงผลต่างกันแค่ไหนในแต่ละอุปกรณ์?</h3>
+<p>คลิกปุ่มด้านล่างสลับดูมือถือ / แท็บเล็ต / เดสก์ท็อป สังเกตว่า Google Sites ปรับขนาดตัวอักษร ความกว้างปุ่ม และพื้นที่ว่างให้เองอัตโนมัติ — นี่คือสิ่งที่ระบบทำให้ฟรีโดยที่เรายังไม่ต้องเขียนโค้ด Responsive เอง</p>
+<div class="respdemo" id="respdemo-1-1" data-device="mobile">
+        <div class="respdemo-toolbar">
+          <button type="button" class="respdemo-btn active" data-device-btn="mobile">📱 มือถือ</button><button type="button" class="respdemo-btn" data-device-btn="tablet">📔 แท็บเล็ต</button><button type="button" class="respdemo-btn" data-device-btn="desktop">💻 เดสก์ท็อป</button>
+        </div>
+        <div class="respdemo-size" data-rd-size>375 × 667 px</div>
+        <div class="respdemo-viewport">
+          <div class="respdemo-frame">
+            <div class="respdemo-notch"></div>
+            <div class="rd-hero">
+              <span class="hd-tag rd-tag-img">🖼 ภาพพื้นหลัง (Header Image)</span>
+              <div class="rd-headline">ขนมโฮมเมดสั่งทำ</div>
+              <div class="rd-sub">สำหรับคนรักสุขภาพ อร่อยได้โดยไม่ต้องกังวลน้ำตาล</div>
+              <div class="rd-btn">สั่งเลย</div>
+            </div>
+          </div>
+        </div>
+        <div class="respdemo-note" data-rd-note>มือถือ (375px): Google Sites ย่อ Headline ให้พอดีจอแคบ ตัดพื้นที่ว่างส่วนเกินออก ปุ่ม CTA ขยายเต็มความกว้างให้แตะง่ายด้วยนิ้ว</div>
+        <p class="respdemo-hint">👆 คลิกปุ่มด้านบนเพื่อดูว่า Hero Section แสดงผลต่างกันอย่างไรในแต่ละอุปกรณ์ (ภาพจำลองย่อสัดส่วนเพื่อให้พอดีหน้าจอ ไม่ใช่ขนาดจริง — ขนาดจริงแสดงเป็นตัวเลขด้านบน)</p>
+      </div>
+      <script>
+      (function(){
+        var root = document.getElementById('respdemo-1-1');
+        if(!root) return;
+        var devices = [{"key":"mobile","icon":"📱","label":"มือถือ","width":375,"height":667,"note":"มือถือ (375px): Google Sites ย่อ Headline ให้พอดีจอแคบ ตัดพื้นที่ว่างส่วนเกินออก ปุ่ม CTA ขยายเต็มความกว้างให้แตะง่ายด้วยนิ้ว"},{"key":"tablet","icon":"📔","label":"แท็บเล็ต","width":768,"height":1024,"note":"แท็บเล็ต (768px): พื้นที่กว้างขึ้น Headline/ปุ่มขยายใหญ่ขึ้นตามสัดส่วน แต่ยังเน้นข้อความสั้น กระชับเหมือนมือถือ"},{"key":"desktop","icon":"💻","label":"เดสก์ท็อป","width":1440,"height":900,"note":"เดสก์ท็อป (1440px): พื้นที่กว้างที่สุด แสดง Headline + Subtitle เต็มรูปแบบ พร้อม Whitespace รอบข้างให้ดูโปร่งสบายตา"}];
+        var sizeEl = root.querySelector('[data-rd-size]');
+        var noteEl = root.querySelector('[data-rd-note]');
+        root.querySelectorAll('[data-device-btn]').forEach(function(btn){
+          btn.addEventListener('click', function(){
+            var key = btn.getAttribute('data-device-btn');
+            root.setAttribute('data-device', key);
+            root.querySelectorAll('[data-device-btn]').forEach(function(b2){ b2.classList.toggle('active', b2 === btn); });
+            var d = devices.filter(function(x){ return x.key === key; })[0];
+            if (d) {
+              sizeEl.textContent = d.width + ' × ' + d.height + ' px';
+              noteEl.textContent = d.note;
+            }
+          });
+        });
+      })();
+      </script>
+      </div>
+    </section>
+
+    <section class="segment" id="s4">
+      <div class="segment-head">
+        <span class="segment-time">20 นาที</span>
+        <h2>ช่วงที่ 4 · Integration & Wrap-up</h2>
+      </div>
+      <div class="segment-body">
+        <p>ปิดคาบด้วยการเผยแพร่เว็บไซต์ให้ทุกคนมีลิงก์จริงกลับบ้าน</p>
+<ol class="steps"><li>กดปุ่ม <b>Publish</b> ที่มุมขวาบนของหน้าจอ</li><li>ตั้งค่า Web address (ชื่อที่จะต่อท้าย sites.google.com/view/...) ให้สื่อถึงแบรนด์</li><li>กด Publish อีกครั้งเพื่อยืนยันการเผยแพร่</li><li>คัดลอกลิงก์เว็บไซต์ แล้วส่งเข้ากลุ่มเรียนเพื่อให้เพื่อนและผู้สอนเข้าไปดูได้</li></ol>
+<div class="callout good"><span class="callout-icon">✅</span><div>จบครั้งนี้ทุกคนควรมีลิงก์เว็บไซต์จริงที่เปิดดูได้ แม้จะมีแค่หน้า Home ที่ยังไม่สมบูรณ์ — ครั้งที่ 2 จะมาต่อหน้า About Us, Products/Services และ Contact Us ให้ครบ</div></div>
+<h3>แหล่งค้นคว้าเพิ่มเติม (ถ้าอยากศึกษาต่อเอง)</h3>
+<p>ถ้าอยากดูตัวอย่างงานออกแบบเพิ่มเติมตามประเภทธุรกิจของตัวเอง ลองค้นคำเหล่านี้ใน YouTube/Google Images:</p>
+<ul class="list"><li>E-Commerce → “E-commerce UI UX Best Practices”</li><li>Service &amp; Lead → “High Converting Landing Page Design Layout”</li><li>Corporate/B2B → “Corporate Website UI Design System Guidelines”</li><li>Education → “LMS Course Platform UI UX Design Tutorial”</li></ul>
+      </div>
+    </section>
+
+  <section class="segment" style="border-top:1px solid var(--border);">
+    <div class="checklist-final">
+      <h4>✅ เช็กก่อนจบครั้งที่ 1</h4>
+      <label class="cl-item"><input type="checkbox" data-cl id="cl-1-0"><span>ตอบคำถาม 3 ข้อใน Worksheet 1 ครบ (ธุรกิจ / ลูกค้า / จุดต่าง)</span></label><label class="cl-item"><input type="checkbox" data-cl id="cl-1-1"><span>วาด Sitemap อย่างน้อย 4 หน้าใน Worksheet 2</span></label><label class="cl-item"><input type="checkbox" data-cl id="cl-1-2"><span>เขียน Hook ตามสูตรใน Worksheet 3</span></label><label class="cl-item"><input type="checkbox" data-cl id="cl-1-3"><span>สร้างไซต์ใหม่บน Google Sites และเพิ่มหน้าตาม Sitemap แล้ว</span></label><label class="cl-item"><input type="checkbox" data-cl id="cl-1-4"><span>หน้า Home มี Header แบบ Large banner พร้อม Title และ Subtitle</span></label><label class="cl-item"><input type="checkbox" data-cl id="cl-1-5"><span>เปิด Preview เช็กมือถือ/แท็บเล็ตคร่าวๆ แล้ว (ไม่ต้องแก้ละเอียด เก็บไว้ครั้งที่ 9)</span></label><label class="cl-item"><input type="checkbox" data-cl id="cl-1-6"><span>กด Publish สำเร็จ และส่งลิงก์เข้ากลุ่มเรียนแล้ว</span></label>
+    </div>
+  </section>
+
+  
+  <div class="sources">
+    อ้างอิง: <a href="https://support.google.com/sites/answer/90538?hl=en" target="_blank" rel="noopener">Google Sites Help — Add or edit text & images</a> · <a href="https://www.steegle.com/google-sites/how-to/page-headers" target="_blank" rel="noopener">Google Sites — Page Headers (Steegle)</a> · <a href="https://www.kirksvillewebdesign.com/google-sites/support/header-image-size" target="_blank" rel="noopener">Google Sites — Header Image Size (Kirksville Web Design)</a> · <a href="https://www.webstarts.com/blog/post/the-anatomy-of-a-webpage-what-is-a-hero-section-and-what-it-should-include" target="_blank" rel="noopener">The Anatomy of a Webpage: Hero Section (Webstarts)</a> · <a href="https://www.perfectafternoon.com/2025/hero-section-design/" target="_blank" rel="noopener">Hero Section Design: Best Practices & Examples (Perfect Afternoon)</a>
+  </div>
+
+  <div class="pager">
+    <a href="../index.html">← หน้าแรก</a>
+    <a href="lesson-02.html">ครั้งที่ 2 →</a>
+  </div>
+</div>
+
+<footer>ครั้งที่ 1 จาก 10 · แผนการสอนการสร้างเว็บไซต์ (ฉบับรวบรัด)</footer>
+
+<script>
+(function(){
+  var STORAGE_KEY = 'lesson-01-worksheet';
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e){}
+  document.querySelectorAll('[data-ws]').forEach(function(el){
+    if (saved[el.id]) el.value = saved[el.id];
+    el.addEventListener('input', function(){
+      saved[el.id] = el.value;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
+    });
+  });
+  var CL_KEY = 'lesson-01-checklist';
+  var clSaved = {};
+  try { clSaved = JSON.parse(localStorage.getItem(CL_KEY) || '{}'); } catch(e){}
+  document.querySelectorAll('[data-cl]').forEach(function(el){
+    if (clSaved[el.id]) el.checked = true;
+    el.addEventListener('change', function(){
+      clSaved[el.id] = el.checked;
+      localStorage.setItem(CL_KEY, JSON.stringify(clSaved));
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

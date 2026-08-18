@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ครั้งที่ 2: สร้างหน้า About Us, Products/Services และ Contact Us ให้ครบ | การสร้างเว็บไซต์ (รวบรัด)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@500;600;700;800&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0b10; --bg2:#12141c; --panel:#161923;
+    --gs:#21e6a1; --ps:#3aa0ff; --code:#ff5470; --mix:#b98bff; --cyan:#00ffff; --blue:#0066ff;
+    --accent:#21e6a1;
+    --text:#f3f6fb; --muted:#9aa5b8; --border:rgba(255,255,255,.09);
+  }
+  *{box-sizing:border-box;}
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:'Sarabun','Noto Sans Thai',-apple-system,'Segoe UI',sans-serif;
+    font-size:18px; line-height:1.75;
+    background-image:
+      radial-gradient(circle at 10% 0%, rgba(0,102,255,.14), transparent 40%),
+      radial-gradient(circle at 90% 10%, rgba(0,255,255,.10), transparent 38%),
+      repeating-linear-gradient(0deg, rgba(255,255,255,.02) 0px, rgba(255,255,255,.02) 1px, transparent 1px, transparent 42px),
+      repeating-linear-gradient(90deg, rgba(255,255,255,.02) 0px, rgba(255,255,255,.02) 1px, transparent 1px, transparent 42px);
+    background-attachment:fixed;
+  }
+  h1,h2,h3,h4{ font-family:'Prompt','Sarabun',sans-serif; }
+  a{ color:var(--cyan); }
+  p{ margin:0 0 16px; color:#dfe4ee; }
+
+  header.top{ position:sticky; top:0; z-index:30; background:rgba(10,11,16,.82); backdrop-filter:blur(14px); border-bottom:1px solid var(--border); }
+  .top-inner{ max-width:920px; margin:0 auto; padding:16px 24px; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+  .back{ font-family:'Prompt',sans-serif; font-weight:600; font-size:15px; color:var(--muted); display:flex; align-items:center; gap:6px; }
+  .back:hover{ color:var(--cyan); }
+  .segnav{ display:flex; gap:16px; font-size:14px; font-weight:600; color:var(--muted); }
+  .segnav a:hover{ color:var(--accent); }
+
+  .hero{ max-width:920px; margin:0 auto; padding:56px 24px 32px; }
+  .eyebrow{ display:flex; align-items:center; gap:10px; margin-bottom:18px; flex-wrap:wrap; }
+  .badge-num{ font-family:'Prompt',sans-serif; font-weight:700; font-size:14px; padding:6px 16px; border-radius:999px; background:color-mix(in srgb, var(--accent) 15%, transparent); color:var(--accent); border:1px solid var(--accent); }
+  .badge-meta{ font-size:14px; font-weight:600; color:var(--muted); }
+  h1{ font-size:38px; font-weight:800; margin:0 0 18px; line-height:1.25; color:var(--text); }
+  .obj-box{ background:var(--panel); border:1px solid var(--border); border-left:3px solid var(--accent); border-radius:14px; padding:20px 22px; margin-top:10px; }
+  .obj-box h4{ margin:0 0 10px; font-size:15px; color:var(--accent); text-transform:uppercase; letter-spacing:.04em; }
+  .obj-box ul{ margin:0; padding-inline-start:20px; }
+  .obj-box li{ margin-bottom:6px; font-size:16px; color:#dfe4ee; }
+
+  .deliverable-box{ background:rgba(255,207,92,.08); border:1px solid rgba(255,207,92,.4); border-radius:14px; padding:18px 22px; margin-top:14px; display:flex; gap:14px; align-items:flex-start; }
+  .deliverable-box .dl-icon{ font-size:24px; flex:none; }
+  .deliverable-box h4{ margin:0 0 6px; font-size:14px; color:#ffcf5c; text-transform:uppercase; letter-spacing:.04em; font-family:'Prompt',sans-serif; }
+  .deliverable-box p{ margin:0; font-size:16px; font-weight:600; color:#fff5db; }
+
+  .section-wrap{ max-width:920px; margin:0 auto; padding:8px 24px 40px; }
+
+  .segment{ padding:40px 0; border-top:1px solid var(--border); scroll-margin-top:80px; }
+  .segment-head{ display:flex; align-items:baseline; gap:14px; margin-bottom:20px; flex-wrap:wrap; }
+  .segment-time{ font-family:'Prompt',sans-serif; font-size:13px; font-weight:700; color:var(--accent); background:color-mix(in srgb, var(--accent) 14%, transparent); border:1px solid var(--accent); padding:4px 12px; border-radius:999px; }
+  .segment-head h2{ font-size:24px; font-weight:700; margin:0; }
+  .segment-body h3{ font-size:19px; font-weight:700; margin:28px 0 12px; color:var(--text); }
+  .segment-body h3:first-child{ margin-top:0; }
+
+  ul.list{ margin:0 0 16px; padding-inline-start:22px; }
+  ul.list li{ margin-bottom:8px; color:#dfe4ee; }
+  ol.steps{ margin:0 0 16px; padding-inline-start:0; list-style:none; counter-reset:step; }
+  ol.steps li{ counter-increment:step; position:relative; padding:12px 16px 12px 48px; margin-bottom:10px; background:var(--panel); border:1px solid var(--border); border-radius:12px; color:#dfe4ee; }
+  ol.steps li::before{ content:counter(step); position:absolute; left:14px; top:50%; transform:translateY(-50%); width:24px; height:24px; border-radius:50%; background:var(--accent); color:#05060a; font-weight:800; font-size:13px; display:flex; align-items:center; justify-content:center; font-family:'Prompt',sans-serif; }
+
+  .table-wrap{ overflow-x:auto; margin:0 0 20px; border:1px solid var(--border); border-radius:12px; }
+  table{ width:100%; border-collapse:collapse; font-size:15px; }
+  th{ background:var(--panel); color:var(--accent); text-align:left; padding:12px 14px; font-family:'Prompt',sans-serif; font-weight:600; font-size:13px; text-transform:uppercase; letter-spacing:.03em; border-bottom:1px solid var(--border); }
+  td{ padding:12px 14px; border-bottom:1px solid var(--border); color:#dfe4ee; }
+  tr:last-child td{ border-bottom:none; }
+
+  .callout{ display:flex; gap:12px; padding:16px 18px; border-radius:14px; margin-bottom:18px; font-size:15.5px; }
+  .callout-icon{ font-size:18px; flex:none; }
+  .callout.good{ background:rgba(33,230,161,.08); border:1px solid rgba(33,230,161,.35); color:#dfe4ee; }
+  .callout.bad{ background:rgba(255,84,112,.08); border:1px solid rgba(255,84,112,.35); color:#dfe4ee; }
+  .callout.info{ background:rgba(0,102,255,.08); border:1px solid rgba(0,102,255,.35); color:#dfe4ee; }
+
+  .worksheet{ background:linear-gradient(180deg, var(--panel), var(--bg2)); border:1px solid var(--border); border-radius:16px; padding:22px; margin:20px 0; }
+  .worksheet-title{ font-family:'Prompt',sans-serif; font-weight:700; font-size:16px; margin-bottom:16px; color:var(--text); }
+  .ws-field{ display:block; margin-bottom:14px; }
+  .ws-field span{ display:block; font-size:14px; color:var(--muted); margin-bottom:6px; font-weight:600; }
+  .ws-field input, .ws-field textarea{
+    width:100%; background:rgba(255,255,255,.04); border:1px solid var(--border); border-radius:10px; padding:10px 12px;
+    color:var(--text); font-family:'Sarabun',sans-serif; font-size:15px; resize:vertical;
+  }
+  .ws-field input:focus, .ws-field textarea:focus{ outline:none; border-color:var(--accent); box-shadow:0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent); }
+  .ws-save-note{ font-size:12.5px; color:var(--muted); text-align:right; opacity:.7; }
+
+  .checklist-final{ background:var(--panel); border:1px solid var(--border); border-radius:16px; padding:24px; margin-top:12px; }
+  .checklist-final h4{ margin:0 0 14px; font-size:16px; color:var(--accent); }
+  .cl-item{ display:flex; align-items:flex-start; gap:10px; margin-bottom:10px; font-size:15.5px; color:#dfe4ee; }
+  .cl-item input{ margin-top:4px; accent-color:var(--accent); width:18px; height:18px; flex:none; }
+
+  .sources{ margin-top:36px; font-size:13.5px; color:var(--muted); border-top:1px solid var(--border); padding-top:18px; }
+  .sources a{ color:var(--muted); text-decoration:underline; }
+
+  .hero-diagram{ border:1px dashed var(--border); border-radius:16px; padding:18px; margin:16px 0 24px; background:radial-gradient(circle at 30% 20%, rgba(255,255,255,.04), transparent 60%); }
+  .hd-frame{ position:relative; border:1px solid var(--border); border-radius:12px; overflow:hidden; background:linear-gradient(160deg,#1a1d29,#0e0f16); min-height:280px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:32px 20px; gap:10px; }
+  .hd-tag{ position:absolute; font-family:'Prompt',sans-serif; font-size:11px; font-weight:700; letter-spacing:.03em; padding:3px 9px; border-radius:999px; background:rgba(0,0,0,.55); border:1px solid; }
+  .hd-visual-tag{ top:10px; left:10px; color:var(--cyan); border-color:var(--cyan); }
+  .hd-headline-tag{ top:78px; left:10px; color:var(--gs); border-color:var(--gs); }
+  .hd-sub-tag{ top:150px; left:10px; color:var(--ps); border-color:var(--ps); }
+  .hd-cta-tag{ bottom:16px; right:14px; color:var(--code); border-color:var(--code); }
+  .hd-headline{ font-family:'Prompt',sans-serif; font-weight:800; font-size:28px; color:#fff; max-width:520px; }
+  .hd-sub{ font-size:15px; color:#c6ccd8; max-width:440px; }
+  .hd-btn{ margin-top:10px; font-family:'Prompt',sans-serif; font-weight:700; font-size:14px; padding:10px 24px; border-radius:999px; background:var(--accent); color:#05060a; }
+  .hd-legend{ display:flex; flex-wrap:wrap; gap:14px; justify-content:center; margin-top:14px; font-size:12.5px; color:var(--muted); }
+  .hd-legend span{ display:flex; align-items:center; gap:6px; }
+  .hd-legend i{ width:10px; height:10px; border-radius:3px; display:inline-block; }
+
+  .compare-grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:18px 0 0; }
+  .compare-card{ border-radius:14px; padding:20px; border:1px solid var(--border); background:var(--panel); }
+  .compare-card.weak{ border-color:rgba(255,84,112,.4); background:rgba(255,84,112,.06); }
+  .compare-card.strong{ border-color:rgba(33,230,161,.4); background:rgba(33,230,161,.06); }
+  .compare-label{ font-family:'Prompt',sans-serif; font-weight:700; font-size:12px; text-transform:uppercase; letter-spacing:.03em; padding:4px 12px; border-radius:999px; display:inline-block; margin-bottom:12px; }
+  .compare-label.weak{ color:var(--code); background:rgba(255,84,112,.18); }
+  .compare-label.strong{ color:var(--gs); background:rgba(33,230,161,.18); }
+  .compare-card h5{ margin:0 0 8px; font-size:16px; font-family:'Prompt',sans-serif; color:var(--text); }
+  .compare-card p{ font-size:14.5px; margin:0 0 8px; color:#c6ccd8; line-height:1.6; }
+  .compare-card ul{ margin:0; padding-inline-start:18px; font-size:14px; color:#c6ccd8; }
+  .compare-card li{ margin-bottom:6px; }
+
+  .analysis-box{ background:rgba(0,255,255,.06); border-left:3px solid var(--cyan); border-radius:0 12px 12px 0; padding:14px 18px; margin:16px 0 24px; font-size:14.5px; color:#dfe4ee; }
+  .analysis-box b{ color:var(--cyan); }
+  .analysis-box summary{ cursor:pointer; font-family:'Prompt',sans-serif; font-weight:700; color:var(--cyan); font-size:14.5px; }
+  .analysis-box[open] summary{ margin-bottom:10px; }
+
+  .hd-frame-sm{ min-height:170px; padding:18px 14px; gap:6px; }
+  .hd-frame-sm .hd-headline{ font-size:19px; max-width:100%; }
+  .hd-frame-sm .hd-sub{ font-size:12.5px; max-width:100%; }
+  .hd-frame-sm .hd-btn{ font-size:12px; padding:7px 16px; margin-top:6px; }
+  .hd-frame-sm .hd-tag{ font-size:9.5px; padding:2px 7px; }
+
+  .tree{ font-size:14px; }
+  .tree .node{ background:rgba(255,255,255,.05); border:1px solid var(--border); border-radius:8px; padding:6px 10px; margin:4px 0; display:inline-block; }
+  .tree .branch{ padding-inline-start:18px; border-left:1px dashed var(--border); margin-inline-start:8px; }
+
+  .navmock{ display:flex; flex-wrap:wrap; gap:7px; }
+  .navmock span{ background:rgba(255,255,255,.06); border:1px solid var(--border); border-radius:999px; padding:6px 12px; font-size:12.5px; color:#dfe4ee; white-space:nowrap; }
+  .compare-card.weak .navmock span{ border-color:rgba(255,84,112,.3); }
+  .compare-card.strong .navmock span{ border-color:rgba(33,230,161,.3); }
+
+  @media (max-width:700px){
+    .compare-grid{ grid-template-columns:1fr; }
+  }
+
+  .respdemo{ background:var(--panel); border:1px solid var(--border); border-radius:18px; padding:22px; margin:20px 0 28px; }
+  .respdemo-toolbar{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px; }
+  .respdemo-btn{ font-family:'Prompt',sans-serif; font-weight:700; font-size:13.5px; padding:9px 16px; border-radius:999px; border:1px solid var(--border); background:rgba(255,255,255,.03); color:var(--muted); cursor:pointer; transition:all .2s ease; }
+  .respdemo-btn:hover{ border-color:var(--accent); color:var(--text); }
+  .respdemo-btn.active{ background:var(--accent); border-color:var(--accent); color:#05060a; }
+  .respdemo-size{ font-family:'Prompt',sans-serif; font-size:13px; font-weight:700; color:var(--cyan); margin-bottom:16px; }
+  .respdemo-viewport{ display:flex; justify-content:center; padding:24px 12px; background:radial-gradient(circle at 50% 0%, rgba(255,255,255,.04), transparent 60%); border-radius:14px; overflow-x:auto; }
+  .respdemo-frame{ width:260px; border-radius:22px; border:3px solid #2a2f3d; background:linear-gradient(165deg,#1a1d29,#0e0f16); box-shadow:0 20px 50px rgba(0,0,0,.4); overflow:hidden; transition:width .45s cubic-bezier(.4,0,.2,1); position:relative; flex:none; }
+  .respdemo-notch{ height:14px; background:#2a2f3d; border-radius:0 0 10px 10px; width:70px; margin:0 auto; transition:opacity .2s ease; }
+  .rd-hero{ padding:26px 18px 22px; display:flex; flex-direction:column; align-items:center; text-align:center; gap:8px; min-height:220px; justify-content:center; }
+  .hd-tag.rd-tag-img{ position:static; margin-bottom:6px; }
+  .rd-headline{ font-family:'Prompt',sans-serif; font-weight:800; color:#fff; font-size:16px; transition:font-size .3s ease; }
+  .rd-sub{ font-size:12px; color:#c6ccd8; transition:font-size .3s ease; }
+  .rd-btn{ margin-top:6px; font-family:'Prompt',sans-serif; font-weight:700; font-size:11.5px; padding:8px 18px; border-radius:999px; background:var(--accent); color:#05060a; transition:all .3s ease; }
+  .respdemo-note{ margin-top:14px; font-size:13.5px; color:#dfe4ee; background:rgba(255,255,255,.03); border-left:3px solid var(--accent); border-radius:0 10px 10px 0; padding:10px 14px; min-height:44px; }
+  .respdemo-hint{ margin:10px 0 0; font-size:12.5px; color:var(--muted); }
+
+  .respdemo[data-device="tablet"] .respdemo-frame{ width:420px; }
+  .respdemo[data-device="desktop"] .respdemo-frame{ width:640px; }
+  .respdemo[data-device="tablet"] .rd-headline{ font-size:21px; }
+  .respdemo[data-device="desktop"] .rd-headline{ font-size:27px; }
+  .respdemo[data-device="tablet"] .rd-sub{ font-size:14px; }
+  .respdemo[data-device="desktop"] .rd-sub{ font-size:16px; }
+  .respdemo[data-device="tablet"] .rd-btn{ font-size:13px; padding:9px 22px; }
+  .respdemo[data-device="desktop"] .rd-btn{ font-size:14.5px; padding:11px 28px; }
+  .respdemo[data-device="mobile"] .rd-btn{ width:100%; }
+  .respdemo[data-device="tablet"] .respdemo-notch,
+  .respdemo[data-device="desktop"] .respdemo-notch{ opacity:0; }
+
+  @media (max-width:700px){
+    .respdemo[data-device="desktop"] .respdemo-frame{ width:100%; max-width:640px; }
+  }
+
+  .pgrid{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:16px 0 20px; }
+  .pgrid-card{ background:var(--panel); border:1px solid var(--border); border-radius:14px; overflow:hidden; }
+  .pgrid-img{ height:100px; background:linear-gradient(135deg,#1a1d29,#0e0f16); display:flex; align-items:center; justify-content:center; color:var(--muted); font-size:12px; }
+  .pgrid-body{ padding:14px; }
+  .pgrid-title{ font-family:'Prompt',sans-serif; font-weight:700; font-size:14.5px; color:var(--text); margin-bottom:4px; }
+  .pgrid-price{ font-size:13px; color:var(--accent); font-weight:700; margin-bottom:10px; }
+  .pgrid-btn{ display:inline-block; font-family:'Prompt',sans-serif; font-weight:700; font-size:12px; padding:7px 16px; border-radius:999px; background:var(--accent); color:#05060a; }
+  @media (max-width:700px){ .pgrid{ grid-template-columns:1fr 1fr; } }
+
+  .pager{ display:flex; justify-content:space-between; gap:16px; margin-top:48px; padding-top:24px; border-top:1px solid var(--border); }
+  .pager a{ font-family:'Prompt',sans-serif; font-weight:600; font-size:15px; padding:12px 18px; border:1px solid var(--border); border-radius:12px; color:var(--text); }
+  .pager a:hover{ border-color:var(--accent); color:var(--accent); }
+  .pager .disabled{ opacity:.35; pointer-events:none; }
+
+  footer{ max-width:920px; margin:0 auto; padding:24px; text-align:center; color:var(--muted); font-size:13px; }
+
+  @media (max-width:700px){
+    .segnav{ display:none; }
+    h1{ font-size:30px; }
+    body{ font-size:16.5px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <a class="back" href="../index.html">← กลับหน้าแรก</a>
+    <nav class="segnav">
+      <a href="#s1">ช่วง 1</a>
+      <a href="#s2">ช่วง 2</a>
+      <a href="#s3">ช่วง 3</a>
+      <a href="#s4">ช่วง 4</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="eyebrow">
+    <span class="badge-num">ครั้งที่ 2</span>
+    <span class="badge-meta">120 นาที</span>
+    <span class="badge-meta">·</span>
+    <span class="badge-meta" style="color:var(--accent)">Google Sites</span>
+  </div>
+  <h1>สร้างหน้า About Us, Products/Services และ Contact Us ให้ครบ</h1>
+  <div class="obj-box">
+    <h4>สิ่งที่จะได้หลังจบครั้งนี้</h4>
+    <ul><li>เขียน Conversion Point และ CTA (หลัก/รอง) ให้ครบทั้ง 3 หน้าที่เหลือด้วยสูตร Action + Benefit</li><li>ใช้โครง Brand Storytelling เขียนเนื้อหาหน้า About Us ให้น่าจดจำ</li><li>จัด Layout สินค้า/บริการแบบ Grid ในหน้า Products/Services ได้</li><li>สร้างและฝัง Google Form ลงหน้า Contact Us ให้ใช้งานได้จริง</li></ul>
+  </div>
+  
+  <div class="deliverable-box">
+    <span class="dl-icon">🎯</span>
+    <div>
+      <h4>ผลงานที่ต้องได้วันนี้</h4>
+      <p>เว็บไซต์มีครบ 4 หน้าตาม Sitemap (Home, About Us, Products/Services, Contact Us) พร้อม Google Forms ที่ใช้งานได้จริงในหน้า Contact Us</p>
+    </div>
+  </div>
+</div>
+
+<div class="section-wrap">
+  
+    <section class="segment" id="s1">
+      <div class="segment-head">
+        <span class="segment-time">15 นาที</span>
+        <h2>ช่วงที่ 1 · Recap & Warm-up</h2>
+      </div>
+      <div class="segment-body">
+        <p>เปิดลิงก์เว็บไซต์ของทุกคนที่ Publish ไปครั้งที่แล้ว ทวนดูหน้า Home สั้นๆ — Hero Section ยังครบไหม Headline ยังอ่านออกไหม</p>
+<div class="callout info"><span class="callout-icon">💡</span><div>ทวนของเดิม: เปิด Worksheet 2 (Sitemap) และ Worksheet 3 (Hook) จากครั้งที่ 1 วางไว้ข้างๆ จะใช้ต่อวันนี้</div></div>
+<p>เป้าหมายวันนี้: ทำเว็บให้ครบ 4 หน้าตาม Sitemap และหน้า Contact Us ต้องมีฟอร์มที่กรอกและส่งได้จริง</p>
+      </div>
+    </section>
+
+    <section class="segment" id="s2">
+      <div class="segment-head">
+        <span class="segment-time">30 นาที</span>
+        <h2>ช่วงที่ 2 · Demo & Concept</h2>
+      </div>
+      <div class="segment-body">
+        <h3>1. จาก Hook สู่ CTA ทั้งเว็บ: Conversion Point คืออะไร</h3>
+<p>ครั้งที่ 1 เขียน Hook ไปแล้วสำหรับหน้า Home วันนี้จะขยายแนวคิดเดียวกันไปทั้งเว็บ ด้วย 2 คำที่ต้องแยกให้ออกก่อน</p>
+<div class="table-wrap"><table><thead><tr><th>คำศัพท์</th><th>ความหมาย</th></tr></thead>
+        <tbody><tr><td>Conversion Point</td><td>ผลลัพธ์สุดท้ายที่อยากให้ผู้เข้าชมทำ เช่น แอด LINE, โทรสอบถาม, กรอกฟอร์ม, สั่งซื้อ</td></tr><tr><td>CTA (Call-to-Action)</td><td>ปุ่ม/ข้อความที่พาผู้ใช้ไปถึง Conversion Point นั้น</td></tr></tbody></table></div>
+<ul class="list"><li><b>Primary CTA</b> — ปุ่มหลัก มีได้แค่ 1 ปุ่มต่อ Section สีเด่นตัดกับพื้นหลัง</li><li><b>Secondary CTA</b> — ปุ่มรองสำหรับคนยังไม่พร้อมตัดสินใจ เช่น “ดูรายละเอียดเพิ่มเติม” ใช้สไตล์ Ghost Button (แค่มีเส้นขอบ ไม่ทึบสี) ให้เด่นน้อยกว่า Primary</li><li><b>Hick's Law</b> — ยิ่งตัวเลือกเยอะ คนยิ่งตัดสินใจช้าลง หน้าที่มีปุ่มสีเท่ากัน 4-5 ปุ่ม จะทำให้ผู้ใช้ลังเลจนไม่กดอะไรเลย</li></ul>
+<p>ลองวิเคราะห์ด้วยกัน: ข้อความปุ่ม 2 แบบนี้ แบบไหนบอกผู้ใช้ได้ชัดกว่าว่ากดแล้วจะได้อะไร</p>
+
+        <div class="compare-grid">
+          <div class="compare-card weak">
+            <span class="compare-label weak">🚫 ปุ่มทื่อๆ ไม่บอกอะไร</span>
+            <p style="font-size:20px;font-weight:800;color:#fff;text-align:center;margin:14px 0">[ คลิกที่นี่ ]</p>
+            <p style="text-align:center;color:#9aa5b8;font-size:13px">หรือ [ ส่งข้อความ ] / [ ติดต่อเรา ]</p>
+          </div>
+          <div class="compare-card strong">
+            <span class="compare-label strong">✅ สูตร Action + Benefit</span>
+            <p style="font-size:18px;font-weight:800;color:#21e6a1;text-align:center;margin:14px 0">[ จองคิวตรวจผิวฟรีวันนี้ ]</p>
+            <p style="text-align:center;color:#9aa5b8;font-size:13px">Action: จองคิวตรวจผิว · Benefit: ฟรีวันนี้</p>
+          </div>
+        </div>
+        <div class="analysis-box"><b>จุดสังเกต:</b> “คลิกที่นี่” ไม่บอกอะไรเลยว่ากดแล้วจะเกิดอะไรขึ้น ผู้ใช้ที่กำลังรีบจะไม่กล้าเสี่ยงกด ส่วนปุ่มขวาบอกทั้งสิ่งที่ต้องทำ (Action) และสิ่งที่จะได้ (Benefit) ในประโยคเดียว — สูตรนี้ใช้ได้กับทุกปุ่มบนเว็บ ไม่ใช่แค่หน้า Home</div>
+<h3>2. เล่าเรื่องแบรนด์ให้น่าจดจำ (Brand Storytelling) สำหรับหน้า About Us</h3>
+<p>หน้า About Us ที่ดีไม่ใช่การแจกแจงข้อมูลบริษัทแบบทางการ แต่คือการเล่าเรื่องสั้นๆ ที่ทำให้ผู้อ่านรู้สึกเชื่อใจ ใช้โครง 3 ส่วนนี้:</p>
+<ul class="list"><li><b>จุดเริ่มต้น/ปัญหาที่เจอ</b> — ทำไมถึงเริ่มทำธุรกิจนี้ เจอปัญหาอะไรที่อยากแก้</li><li><b>ทางแก้ที่ค้นพบ</b> — ทำอย่างไรถึงแก้ปัญหานั้นได้ อะไรที่ทำให้ต่างจากคนอื่น</li><li><b>คุณค่าที่ส่งต่อลูกค้าวันนี้</b> — วันนี้ลูกค้าจะได้อะไรจากแบรนด์นี้</li></ul>
+
+        <div class="compare-grid">
+          <div class="compare-card weak">
+            <span class="compare-label weak">🚫 ทางการ ไม่มีตัวตน</span>
+            <p style="font-size:13.5px;color:#c6ccd8;line-height:1.7">“บริษัทของเราก่อตั้งขึ้นเพื่อดำเนินธุรกิจด้านอาหารและเครื่องดื่ม โดยมีวิสัยทัศน์ในการเป็นผู้นำตลาดและมุ่งมั่นสร้างความพึงพอใจสูงสุดแก่ลูกค้าทุกท่าน”</p>
+          </div>
+          <div class="compare-card strong">
+            <span class="compare-label strong">✅ เล่าเรื่องจริง มีตัวตน</span>
+            <p style="font-size:13.5px;color:#dfe4ee;line-height:1.7">“เมื่อ 3 ปีก่อนแม่ของเราแพ้กลูเตนจนหาขนมอร่อยๆ กินแทบไม่ได้ เราเลยเริ่มลองทำขนมอบสูตรไร้กลูเตนเองที่บ้าน วันนี้ทุกชิ้นที่ส่งถึงมือคุณ ยังคงทำสดใหม่ทุกเช้าด้วยสูตรเดียวกับที่ทำให้แม่ยิ้มได้อีกครั้ง”</p>
+          </div>
+        </div>
+        <div class="analysis-box"><b>จุดสังเกต:</b> ข้อความซ้ายใช้ได้กับธุรกิจไหนก็ได้ในโลก เพราะไม่มีรายละเอียดเฉพาะตัว อ่านแล้วลืมทันที ข้อความขวามีตัวละคร (แม่) มีปัญหาที่จับต้องได้ (แพ้กลูเตน) และจบด้วยคุณค่าที่ส่งต่อวันนี้ — คนจำเรื่องราวได้ดีกว่าคำโฆษณาเสมอ</div>
+<h3>3. จัด Layout สินค้า/บริการแบบ Grid</h3>
+<p>หน้า Products/Services ควรจัดเป็นตารางการ์ด (Grid) แทนการเขียนเรียงเป็นย่อหน้ายาว เพราะสายตาคนสแกนเปรียบเทียบตัวเลือกได้เร็วกว่ามาก การ์ดสินค้าแต่ละใบควรมี 4 องค์ประกอบ: รูปภาพ, ชื่อสินค้า/บริการ, ราคาหรือรายละเอียดสั้น, และปุ่ม CTA</p>
+
+        <div class="pgrid">
+          <div class="pgrid-card">
+            <div class="pgrid-img">🖼 รูปสินค้า A</div>
+            <div class="pgrid-body">
+              <div class="pgrid-title">คุกกี้ไร้กลูเตน</div>
+              <div class="pgrid-price">฿90 / กล่อง</div>
+              <span class="pgrid-btn">สั่งเลย</span>
+            </div>
+          </div>
+          <div class="pgrid-card">
+            <div class="pgrid-img">🖼 รูปสินค้า B</div>
+            <div class="pgrid-body">
+              <div class="pgrid-title">บราวนี่มะพร้าว</div>
+              <div class="pgrid-price">฿120 / กล่อง</div>
+              <span class="pgrid-btn">สั่งเลย</span>
+            </div>
+          </div>
+          <div class="pgrid-card">
+            <div class="pgrid-img">🖼 รูปสินค้า C</div>
+            <div class="pgrid-body">
+              <div class="pgrid-title">เซตทดลอง 3 ชิ้น</div>
+              <div class="pgrid-price">฿199</div>
+              <span class="pgrid-btn">สั่งเลย</span>
+            </div>
+          </div>
+        </div>
+<div class="callout info"><span class="callout-icon">💡</span><div>ตอนนี้ใช้รูปชั่วคราว/สีพื้นไปก่อนได้ ยังไม่ต้องเป๊ะ — เทคนิคแต่งรูปสินค้าให้สวยมืออาชีพด้วย Photoshop (พร้อมสเปกขนาดภาพที่แนะนำ เช่น Product Card 800×800px) จะสอนรวมกันในครั้งที่ 4-6 วันนี้เน้นแค่ให้โครงสร้าง Layout ครบก่อน</div></div>
+<h3>4. เทคนิค: แยกข้อความออกจากภาพพื้นหลังเสมอ</h3>
+<p>เวลาจะใส่หัวข้อทับรูปภาพ (เช่น Sub-page Header ของหน้า About Us หรือ Products) มี 2 วิธี แต่วิธีที่แนะนำคือ:</p>
+<ul class="list"><li><b>พิมพ์ข้อความลงกล่องข้อความ (Text box) ของ Google Sites วางทับรูป</b> — ข้อความจะเป็น Responsive Text ที่บีบ/ขึ้นบรรทัดใหม่อัตโนมัติตามหน้าจอ ไม่มีวันโดนตัดคำหลุดขอบเวลาเปิดบนมือถือ</li><li><b>ไม่แนะนำ:</b> การฝังตัวอักษรลงในไฟล์รูปภาพเอง (เช่น พิมพ์ข้อความใน Photoshop แล้วเซฟรวมเป็นรูปเดียว) เพราะเมื่อ Google Sites ครอปภาพตามที่เรียนไปครั้งที่ 1 ตัวอักษรที่ฝังอยู่ในรูปจะถูกตัดหายไปด้วย แก้ไขทีหลังก็ยาก เพราะต้องไปแก้ที่ไฟล์รูปแล้วอัปโหลดใหม่ทั้งภาพ</li></ul>
+<div class="callout good"><span class="callout-icon">✅</span><div>ใช้กฎนี้ได้กับทุกหน้าที่มีรูปภาพ+ข้อความในคอร์สนี้ตั้งแต่วันนี้เป็นต้นไป — เป็นข้อเท็จจริงของแพลตฟอร์ม ไม่ต้องรอทักษะ Photoshop</div></div>
+<h3>5. Lead Generation คืออะไร ทำไมหน้า Contact Us ต้องมี Google Form</h3>
+<p>Lead Generation คือการเก็บข้อมูลติดต่อของผู้สนใจไว้ก่อน แทนที่จะรอให้เขาโทรมาเอง ตัวอย่างปัญหาที่พบบ่อย: ธุรกิจ B2B ใส่แค่เบอร์โทรกลางของบริษัทไว้ที่หน้า Contact Us แต่ไม่มีคนรับสาย ลูกค้าที่สนใจจริงก็หายไปเฉยๆ เพราะไม่อยากเสียเวลาโทร — การฝัง Google Form ให้กรอกข้อมูลทิ้งไว้ แก้ปัญหานี้ได้ตรงจุด</p>
+<ul class="list"><li>ข้อมูลพื้นฐานที่ควรเก็บในฟอร์ม: ชื่อ, เบอร์โทร/LINE, หัวข้อที่สนใจ, ข้อความเพิ่มเติม</li><li>อย่าถามคำถามเยอะเกินไป — ยิ่งฟอร์มสั้น คนยิ่งกรอกจนจบมากขึ้น (คนละหลักการเดียวกับ Hick's Law)</li></ul>
+      </div>
+    </section>
+
+    <section class="segment" id="s3">
+      <div class="segment-head">
+        <span class="segment-time">55 นาที</span>
+        <h2>ช่วงที่ 3 · Hands-on Practice</h2>
+      </div>
+      <div class="segment-body">
+        <p>ลำดับการทำวันนี้: Worksheet วางแผน CTA 3 หน้า (20 นาที) → สร้างหน้า About Us (10 นาที) → สร้างหน้า Products/Services แบบ Grid (15 นาที) → สร้างและฝัง Google Form ในหน้า Contact Us (10 นาที)</p>
+<h3>ขั้นตอนที่ 1: CTA Mapping Sheet (20 นาที)</h3>
+<p>วางแผน Conversion Point และข้อความ CTA ให้ครบ 3 หน้าที่เหลือ ก่อนลงมือพิมพ์จริงบน Google Sites (หน้า Home ทำสูตร Hook ไปแล้วในครั้งที่ 1 ไม่ต้องทำซ้ำ)</p>
+<div class="worksheet">
+        <div class="worksheet-title">📝 CTA Mapping Sheet — หน้า Products/Services</div>
+        <label class="ws-field"><span>Conversion Point (ผลลัพธ์ที่ต้องการ)</span><input id="ws-2-1-0" data-ws type="text" placeholder="เช่น สั่งซื้อสินค้าทันที / ขอใบเสนอราคา"></label><label class="ws-field"><span>Primary CTA (ปุ่มหลัก — Action + Benefit)</span><input id="ws-2-1-1" data-ws type="text" placeholder="เช่น สั่งซื้อพร้อมรับส่วนลด 10%"></label><label class="ws-field"><span>Secondary CTA (ปุ่มรอง — Ghost Button)</span><input id="ws-2-1-2" data-ws type="text" placeholder="เช่น สอบถามเพิ่มเติมทาง LINE"></label>
+        <div class="ws-save-note" data-ws-note>บันทึกอัตโนมัติในเบราว์เซอร์นี้</div>
+      </div>
+<div class="worksheet">
+        <div class="worksheet-title">📝 CTA Mapping Sheet — หน้า About Us</div>
+        <label class="ws-field"><span>Primary CTA (ปุ่มหลัก)</span><input id="ws-2-2-0" data-ws type="text" placeholder="เช่น ดูสินค้าทั้งหมดของเรา"></label>
+        <div class="ws-save-note" data-ws-note>บันทึกอัตโนมัติในเบราว์เซอร์นี้</div>
+      </div>
+<div class="worksheet">
+        <div class="worksheet-title">📝 CTA Mapping Sheet — หน้า Contact Us</div>
+        <label class="ws-field"><span>Primary CTA (ปุ่มหลัก)</span><input id="ws-2-3-0" data-ws type="text" placeholder="เช่น ส่งข้อความหาเราเลย"></label>
+        <div class="ws-save-note" data-ws-note>บันทึกอัตโนมัติในเบราว์เซอร์นี้</div>
+      </div>
+<h3>ขั้นตอนที่ 2: สร้างหน้า About Us (10 นาที)</h3>
+<ol class="steps"><li>ที่แถบขวามือคลิกแท็บ <b>Pages</b> เปิดหน้า <b>About Us</b> ที่เพิ่มไว้ตั้งแต่ครั้งที่ 1 (ถ้ายังไม่มี คลิกไอคอน “+” → New page → ตั้งชื่อ About Us)</li><li>คลิก <b>Insert</b> → <b>Text box</b> พิมพ์เนื้อหา Brand Story ตามโครง 3 ส่วนที่เรียนไปข้างต้น</li><li>คลิก <b>Insert</b> → <b>Button</b> พิมพ์ข้อความ Primary CTA จาก Worksheet ที่กรอกไว้ → ใส่ลิงก์ไปหน้าที่เกี่ยวข้อง (เช่น หน้า Products)</li><li>กด <b>Preview</b> เช็กว่าอ่านเนื้อหาได้ครบ ไม่มีข้อความตกขอบ</li></ol>
+<h3>ขั้นตอนที่ 3: สร้างหน้า Products/Services แบบ Grid (15 นาที)</h3>
+<ol class="steps"><li>เปิดหน้า <b>Products/Services</b> จากแท็บ Pages</li><li>คลิก <b>Insert</b> เลื่อนลงไปหมวด “Content Blocks” เลือก Layout แบบ 3 คอลัมน์แล้วลากมาวางบนหน้า</li><li>ใส่รูปสินค้าในแต่ละช่อง (คลิกช่องรูป → Select image) ถ้ายังไม่มีรูปสวยใช้สีพื้นหรือรูปชั่วคราวไปก่อน</li><li>พิมพ์ชื่อสินค้า/บริการและราคาหรือรายละเอียดสั้นใต้รูปแต่ละชิ้น ทำซ้ำจนครบสินค้าอย่างน้อย 3 รายการ</li><li>คลิก <b>Insert</b> → <b>Button</b> ใส่ปุ่ม Primary/Secondary CTA จาก Worksheet ที่กรอกไว้</li></ol>
+<h3>ขั้นตอนที่ 4: สร้างและฝัง Google Form ในหน้า Contact Us (10 นาที, จับมือทำทีละคลิก)</h3>
+<ol class="steps"><li>เปิดแท็บใหม่ไปที่ <b>forms.google.com</b></li><li>คลิก <b>Blank form</b> (ฟอร์มว่างเปล่า) ตั้งชื่อฟอร์มเป็นชื่อธุรกิจของคุณ</li><li>เพิ่มคำถาม 4 ข้อ: ชื่อ, เบอร์โทร/LINE, หัวข้อที่สนใจ, ข้อความเพิ่มเติม (คลิกไอคอน “+” ทางขวาเพื่อเพิ่มคำถามใหม่)</li><li>มุมขวาบนกด <b>Send</b> แล้วปิดหน้าต่างได้เลย (ขั้นตอนนี้ทำให้ฟอร์มพร้อมใช้งาน ไม่ต้องคัดลอกลิงก์ไปไหน)</li><li>กลับมาที่ Google Sites หน้า <b>Contact Us</b> คลิก <b>Insert</b> → เลื่อนลงไปหา <b>Forms</b></li><li>เลือกฟอร์มที่เพิ่งสร้าง แล้วคลิก <b>Insert</b></li><li>ลากมุมกล่องฟอร์มที่แทรกเข้ามาเพื่อปรับขนาดให้พอดีกับพื้นที่หน้า</li><li>กด <b>Publish</b> ที่มุมขวาบนอีกครั้งเพื่อเผยแพร่การเปลี่ยนแปลง</li></ol>
+<div class="callout bad"><span class="callout-icon">🚫</span><div>ข้อควรระวัง: ถ้าลืมกด Send/เผยแพร่ฟอร์มก่อน คนอื่นจะเปิดกรอกฟอร์มไม่ได้แม้จะฝังลงเว็บแล้ว — ให้เช็กสิทธิ์การเข้าถึงฟอร์มเป็น “ทุกคนที่มีลิงก์” เสมอ</div></div>
+      </div>
+    </section>
+
+    <section class="segment" id="s4">
+      <div class="segment-head">
+        <span class="segment-time">20 นาที</span>
+        <h2>ช่วงที่ 4 · Integration & Wrap-up</h2>
+      </div>
+      <div class="segment-body">
+        <p>ปิดคาบด้วยการทดสอบว่าทุกอย่างใช้งานได้จริง ไม่ใช่แค่หน้าตาสวย</p>
+<ol class="steps"><li>ทดลองกรอกฟอร์มในหน้า Contact Us ของตัวเองแล้วกด Submit อย่างน้อย 1 ครั้ง</li><li>เปิด Google Forms เช็กแท็บ Responses ว่าคำตอบที่ทดลองส่งเข้ามาจริง</li><li>คลิกเมนูทุกหน้า (Home, About Us, Products/Services, Contact Us) เช็กว่าลิงก์และปุ่ม CTA ทุกปุ่มกดแล้วไปถูกหน้า</li><li>กด <b>Publish</b> อีกครั้งเพื่อยืนยันทุกหน้าล่าสุด</li></ol>
+<div class="callout good"><span class="callout-icon">✅</span><div>จบครั้งนี้เว็บไซต์ควรมีครบ 4 หน้าและฟอร์มติดต่อใช้งานได้จริง — ครั้งที่ 3 จะมาเสริมมัลติมีเดีย (YouTube/Maps/PDF), ทฤษฎี Mobile Preview แบบ Thumb Zone และแนะนำว่า Embed Code คืออะไร</div></div>
+      </div>
+    </section>
+
+  <section class="segment" style="border-top:1px solid var(--border);">
+    <div class="checklist-final">
+      <h4>✅ เช็กก่อนจบครั้งที่ 2</h4>
+      <label class="cl-item"><input type="checkbox" data-cl id="cl-2-0"><span>กรอก CTA Mapping Sheet ครบ 3 หน้า (Products/Services, About Us, Contact Us)</span></label><label class="cl-item"><input type="checkbox" data-cl id="cl-2-1"><span>หน้า About Us มี Brand Story ตามโครง 3 ส่วน พร้อม CTA อย่างน้อย 1 ปุ่ม</span></label><label class="cl-item"><input type="checkbox" data-cl id="cl-2-2"><span>หน้า Products/Services จัด Layout แบบ Grid ครบอย่างน้อย 3 รายการ พร้อมปุ่ม CTA</span></label><label class="cl-item"><input type="checkbox" data-cl id="cl-2-3"><span>สร้าง Google Form และกด Send/เผยแพร่แล้ว</span></label><label class="cl-item"><input type="checkbox" data-cl id="cl-2-4"><span>ฝัง Google Form ลงหน้า Contact Us สำเร็จ และปรับขนาดพอดีหน้าจอ</span></label><label class="cl-item"><input type="checkbox" data-cl id="cl-2-5"><span>ทดลองกรอกฟอร์มจริงอย่างน้อย 1 ครั้ง และเช็กใน Responses ว่าข้อมูลเข้าจริง</span></label><label class="cl-item"><input type="checkbox" data-cl id="cl-2-6"><span>เมนู/ปุ่มลิงก์ครบทั้ง 4 หน้า กด Publish สำเร็จ</span></label>
+    </div>
+  </section>
+
+  
+  <div class="sources">
+    อ้างอิง: <a href="https://support.google.com/sites/answer/90569?hl=en" target="_blank" rel="noopener">Google Sites Help — Add Google files, videos, website content & more (Forms)</a> · <a href="https://support.google.com/docs/answer/6281888?hl=en" target="_blank" rel="noopener">Google Docs Editors Help — How to use Google Forms</a> · <a href="https://support.google.com/sites/answer/90538?hl=en" target="_blank" rel="noopener">Google Sites Help — Add or edit text & images</a> · <a href="https://ixdf.org/literature/topics/hick-s-law" target="_blank" rel="noopener">Interaction Design Foundation — What is Hick's Law</a> · <a href="https://www.nngroup.com/videos/hicks-law-long-menus/" target="_blank" rel="noopener">NN/g — Hick's Law: Designing Long Menu Lists</a>
+  </div>
+
+  <div class="pager">
+    <a href="lesson-01.html">← ครั้งที่ 1</a>
+    <a href="lesson-03.html">ครั้งที่ 3 →</a>
+  </div>
+</div>
+
+<footer>ครั้งที่ 2 จาก 10 · แผนการสอนการสร้างเว็บไซต์ (ฉบับรวบรัด)</footer>
+
+<script>
+(function(){
+  var STORAGE_KEY = 'lesson-02-worksheet';
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e){}
+  document.querySelectorAll('[data-ws]').forEach(function(el){
+    if (saved[el.id]) el.value = saved[el.id];
+    el.addEventListener('input', function(){
+      saved[el.id] = el.value;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
+    });
+  });
+  var CL_KEY = 'lesson-02-checklist';
+  var clSaved = {};
+  try { clSaved = JSON.parse(localStorage.getItem(CL_KEY) || '{}'); } catch(e){}
+  document.querySelectorAll('[data-cl]').forEach(function(el){
+    if (clSaved[el.id]) el.checked = true;
+    el.addEventListener('change', function(){
+      clSaved[el.id] = el.checked;
+      localStorage.setItem(CL_KEY, JSON.stringify(clSaved));
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
