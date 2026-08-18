@@ -54,6 +54,21 @@
   .qcard .goal{color:var(--muted); font-size:13.5px; margin-bottom:12px;}
   .qcard .btnrow{display:flex; flex-wrap:wrap; gap:8px;}
 
+  /* product grid examples */
+  .pgroup{margin-bottom:40px;}
+  .pgroup:last-child{margin-bottom:0;}
+  .pgroup-head{display:flex; align-items:center; gap:12px; margin-bottom:16px; padding-left:6px; border-left:4px solid var(--accent);}
+  .pgroup-head .emoji{font-size:24px;}
+  .pgroup-head h4{font-size:17px; margin:0;}
+  .pgroup-head .foc{font-size:13px; color:var(--muted); margin-top:2px;}
+  .pgrid{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px;}
+  .pcard{background:var(--panel2); border:1px solid var(--border); border-radius:14px; overflow:hidden; display:flex; flex-direction:column;}
+  .pcard .thumb{height:110px; display:flex; align-items:center; justify-content:center; font-size:34px; background:linear-gradient(135deg, color-mix(in srgb, var(--accent) 35%, transparent), color-mix(in srgb, var(--accent) 10%, transparent));}
+  .pcard .pbody{padding:14px 16px 16px; display:flex; flex-direction:column; gap:6px; flex:1;}
+  .pcard .pname{font-family:'Prompt',sans-serif; font-weight:600; font-size:14.5px;}
+  .pcard .pprice{font-size:13px; color:var(--muted);}
+  .pcard button.btn{margin-top:8px; align-self:flex-start;}
+
   button.btn{font-family:'Prompt',sans-serif; font-weight:700; font-size:13.5px; border-radius:999px; padding:9px 18px; border:2px solid transparent; cursor:pointer; transition:.15s transform,.15s box-shadow; color:#fff;}
   button.btn:hover{transform:translateY(-2px); box-shadow:0 6px 18px rgba(0,0,0,.35);}
   button.btn.ghost{background:transparent !important; }
@@ -130,6 +145,7 @@
   <div class="wrap">
     <a href="#formula">สูตร CTA</a>
     <a href="#quick4">4 ประเภทธุรกิจหลัก</a>
+    <a href="#productgrid">ตัวอย่างหน้า Products/Services</a>
     <a href="#matrix">CTA Makeover Matrix</a>
     <a href="#cases">4 กรณีศึกษา Before/After</a>
     <a href="#forms">ตัวอย่าง Google Form</a>
@@ -201,6 +217,66 @@
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<section id="productgrid">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">Lesson 2 · จัด Layout สินค้า/บริการแบบ Grid</div>
+      <h2>ตัวอย่างหน้า Products/Services แต่ละประเภทธุรกิจ</h2>
+      <p>การ์ดแต่ละใบยังคง 4 องค์ประกอบเดิม (รูป, ชื่อ, ราคา/รายละเอียดสั้น, ปุ่ม CTA) แต่สิ่งที่ "ควรเน้น" ต่างกันไปตามประเภทธุรกิจ</p>
+    </div>
+
+    <div class="pgroup" style="--accent:var(--ecom)">
+      <div class="pgroup-head">
+        <span class="emoji">🛍️</span>
+        <div><h4>E-Commerce — เน้นรูปสวยชัด + ราคา + ปุ่มสั่งซื้อ</h4><div class="foc">ตัดสินใจซื้อได้จากหน้านี้เลย ไม่ต้องคุยก่อน</div></div>
+      </div>
+      <div class="pgrid">
+        <div class="pcard"><div class="thumb">🍪</div><div class="pbody"><div class="pname">คุกกี้ไร้กลูเตน</div><div class="pprice">฿90 / กล่อง</div><button class="btn" style="background:var(--ecom)">สั่งเลย</button></div></div>
+        <div class="pcard"><div class="thumb">🍫</div><div class="pbody"><div class="pname">บราวนี่มะพร้าว</div><div class="pprice">฿120 / กล่อง</div><button class="btn" style="background:var(--ecom)">สั่งเลย</button></div></div>
+        <div class="pcard"><div class="thumb">🎁</div><div class="pbody"><div class="pname">เซตทดลอง 3 ชิ้น</div><div class="pprice">฿199</div><button class="btn" style="background:var(--ecom)">สั่งเลย</button></div></div>
+      </div>
+    </div>
+
+    <div class="pgroup" style="--accent:var(--clinic)">
+      <div class="pgroup-head">
+        <span class="emoji">🤝</span>
+        <div><h4>Service &amp; Lead — เน้นแพ็กเกจ/ขอบเขตงาน ไม่ตั้งราคาตายตัวเสมอไป</h4><div class="foc">ให้ลูกค้าเห็นขอบเขตงานคร่าวๆ ก่อนติดต่อขอราคาจริง</div></div>
+      </div>
+      <div class="pgrid">
+        <div class="pcard"><div class="thumb">🧹</div><div class="pbody"><div class="pname">แพ็กเกจทำความสะอาดบ้าน (คอนโด 1 ห้องนอน)</div><div class="pprice">เริ่มต้น ฿890</div><button class="btn" style="background:var(--clinic)">ขอใบเสนอราคา</button></div></div>
+        <div class="pcard"><div class="thumb">📸</div><div class="pbody"><div class="pname">แพ็กเกจถ่ายภาพสินค้า (10 ชิ้น)</div><div class="pprice">เริ่มต้น ฿1,500</div><button class="btn" style="background:var(--clinic)">นัดคุยงานฟรี</button></div></div>
+        <div class="pcard"><div class="thumb">🎨</div><div class="pbody"><div class="pname">ออกแบบโลโก้ + Brand Guideline</div><div class="pprice">ติดต่อขอราคา</div><button class="btn" style="background:var(--clinic)">ขอใบเสนอราคา</button></div></div>
+      </div>
+    </div>
+
+    <div class="pgroup" style="--accent:var(--factory)">
+      <div class="pgroup-head">
+        <span class="emoji">🏢</span>
+        <div><h4>Corporate/B2B — เน้นโซลูชัน/สายผลิตภัณฑ์ ไม่ใช่ตะกร้าสินค้า</h4><div class="foc">ลูกค้าคือเจ้าของแบรนด์ที่มองหามาตรฐานและกำลังการผลิต</div></div>
+      </div>
+      <div class="pgrid">
+        <div class="pcard"><div class="thumb">🧪</div><div class="pbody"><div class="pname">โซลูชัน OEM สูตรอาหารเสริม</div><div class="pprice">ขั้นต่ำ 5,000 ชิ้น</div><button class="btn" style="background:var(--factory)">ขอสเปกสูตรผลิต</button></div></div>
+        <div class="pcard"><div class="thumb">📦</div><div class="pbody"><div class="pname">สายผลิตภัณฑ์บรรจุภัณฑ์อาหาร</div><div class="pprice">มาตรฐาน GMP/FDA</div><button class="btn" style="background:var(--factory)">ดาวน์โหลดโปรไฟล์โรงงาน</button></div></div>
+        <div class="pcard"><div class="thumb">🏭</div><div class="pbody"><div class="pname">บริการรับผลิต Private Label</div><div class="pprice">ปรึกษาฟรี</div><button class="btn" style="background:var(--factory)">ติดต่อฝ่ายขาย</button></div></div>
+      </div>
+    </div>
+
+    <div class="pgroup" style="--accent:var(--education)">
+      <div class="pgroup-head">
+        <span class="emoji">🎓</span>
+        <div><h4>Education — เน้นสารบัญคอร์ส + ราคา + วิดีโอตัวอย่างเรียนฟรี</h4><div class="foc">ให้ผู้เรียนมั่นใจก่อนจ่ายเงินด้วยตัวอย่างเนื้อหาจริง</div></div>
+      </div>
+      <div class="pgrid">
+        <div class="pcard"><div class="thumb">💻</div><div class="pbody"><div class="pname">คอร์สสร้างเว็บไซต์ (รวบรัด 10 ครั้ง)</div><div class="pprice">฿2,900</div><button class="btn" style="background:var(--education)">ทดลองเรียนฟรี</button></div></div>
+        <div class="pcard"><div class="thumb">🖌️</div><div class="pbody"><div class="pname">คอร์ส Photoshop เบื้องต้น</div><div class="pprice">฿1,900</div><button class="btn" style="background:var(--education)">ดูวิดีโอตัวอย่าง</button></div></div>
+        <div class="pcard"><div class="thumb">📈</div><div class="pbody"><div class="pname">คอร์สการตลาดออนไลน์</div><div class="pprice">฿2,400</div><button class="btn" style="background:var(--education)">สมัครเลย</button></div></div>
+      </div>
+    </div>
+
+    <div class="note" style="margin-top:32px">💡 ทั้ง 4 ตัวอย่างนี้ใช้ Layout แบบ 3 คอลัมน์เดียวกัน ต่างกันแค่ "สิ่งที่เขียนในการ์ด" และข้อความปุ่ม CTA — ดูตารางเทียบแบบละเอียดเพิ่มเติมได้ในเนื้อหาครั้งที่ 2</div>
   </div>
 </section>
 
