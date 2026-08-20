@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ครั้งที่ 3: มัลติมีเดีย, Mobile Preview และรู้จัก Embed Code เบื้องต้น | การสร้างเว็บไซต์ (รวบรัด)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@500;600;700;800&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0b10; --bg2:#12141c; --panel:#161923;
+    --gs:#21e6a1; --ps:#3aa0ff; --code:#ff5470; --mix:#b98bff; --cyan:#00ffff; --blue:#0066ff;
+    --accent:#21e6a1;
+    --text:#f3f6fb; --muted:#9aa5b8; --border:rgba(255,255,255,.09);
+  }
+  *{box-sizing:border-box;}
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:'Sarabun','Noto Sans Thai',-apple-system,'Segoe UI',sans-serif;
+    font-size:18px; line-height:1.75;
+    background-image:
+      radial-gradient(circle at 10% 0%, rgba(0,102,255,.14), transparent 40%),
+      radial-gradient(circle at 90% 10%, rgba(0,255,255,.10), transparent 38%),
+      repeating-linear-gradient(0deg, rgba(255,255,255,.02) 0px, rgba(255,255,255,.02) 1px, transparent 1px, transparent 42px),
+      repeating-linear-gradient(90deg, rgba(255,255,255,.02) 0px, rgba(255,255,255,.02) 1px, transparent 1px, transparent 42px);
+    background-attachment:fixed;
+  }
+  h1,h2,h3,h4{ font-family:'Prompt','Sarabun',sans-serif; }
+  a{ color:var(--cyan); }
+  p{ margin:0 0 16px; color:#dfe4ee; }
+
+  header.top{ position:sticky; top:0; z-index:30; background:rgba(10,11,16,.82); backdrop-filter:blur(14px); border-bottom:1px solid var(--border); }
+  .top-inner{ max-width:920px; margin:0 auto; padding:16px 24px; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+  .back{ font-family:'Prompt',sans-serif; font-weight:600; font-size:15px; color:var(--muted); display:flex; align-items:center; gap:6px; }
+  .back:hover{ color:var(--cyan); }
+  .segnav{ display:flex; gap:16px; font-size:14px; font-weight:600; color:var(--muted); }
+  .segnav a:hover{ color:var(--accent); }
+
+  .hero{ max-width:920px; margin:0 auto; padding:56px 24px 32px; }
+  .eyebrow{ display:flex; align-items:center; gap:10px; margin-bottom:18px; flex-wrap:wrap; }
+  .badge-num{ font-family:'Prompt',sans-serif; font-weight:700; font-size:14px; padding:6px 16px; border-radius:999px; background:color-mix(in srgb, var(--accent) 15%, transparent); color:var(--accent); border:1px solid var(--accent); }
+  .badge-meta{ font-size:14px; font-weight:600; color:var(--muted); }
+  h1{ font-size:38px; font-weight:800; margin:0 0 18px; line-height:1.25; color:var(--text); }
+  .obj-box{ background:var(--panel); border:1px solid var(--border); border-left:3px solid var(--accent); border-radius:14px; padding:20px 22px; margin-top:10px; }
+  .obj-box h4{ margin:0 0 10px; font-size:15px; color:var(--accent); text-transform:uppercase; letter-spacing:.04em; }
+  .obj-box ul{ margin:0; padding-inline-start:20px; }
+  .obj-box li{ margin-bottom:6px; font-size:16px; color:#dfe4ee; }
+
+  .deliverable-box{ background:rgba(255,207,92,.08); border:1px solid rgba(255,207,92,.4); border-radius:14px; padding:18px 22px; margin-top:14px; display:flex; gap:14px; align-items:flex-start; }
+  .deliverable-box .dl-icon{ font-size:24px; flex:none; }
+  .deliverable-box h4{ margin:0 0 6px; font-size:14px; color:#ffcf5c; text-transform:uppercase; letter-spacing:.04em; font-family:'Prompt',sans-serif; }
+  .deliverable-box p{ margin:0; font-size:16px; font-weight:600; color:#fff5db; }
+
+  .section-wrap{ max-width:920px; margin:0 auto; padding:8px 24px 40px; }
+
+  .segment{ padding:40px 0; border-top:1px solid var(--border); scroll-margin-top:80px; }
+  .segment-head{ display:flex; align-items:baseline; gap:14px; margin-bottom:20px; flex-wrap:wrap; }
+  .segment-time{ font-family:'Prompt',sans-serif; font-size:13px; font-weight:700; color:var(--accent); background:color-mix(in srgb, var(--accent) 14%, transparent); border:1px solid var(--accent); padding:4px 12px; border-radius:999px; }
+  .segment-head h2{ font-size:24px; font-weight:700; margin:0; }
+  .segment-body h3{ font-size:19px; font-weight:700; margin:28px 0 12px; color:var(--text); }
+  .segment-body h3:first-child{ margin-top:0; }
+
+  ul.list{ margin:0 0 16px; padding-inline-start:22px; }
+  ul.list li{ margin-bottom:8px; color:#dfe4ee; }
+  ol.steps{ margin:0 0 16px; padding-inline-start:0; list-style:none; counter-reset:step; }
+  ol.steps li{ counter-increment:step; position:relative; padding:12px 16px 12px 48px; margin-bottom:10px; background:var(--panel); border:1px solid var(--border); border-radius:12px; color:#dfe4ee; }
+  ol.steps li::before{ content:counter(step); position:absolute; left:14px; top:50%; transform:translateY(-50%); width:24px; height:24px; border-radius:50%; background:var(--accent); color:#05060a; font-weight:800; font-size:13px; display:flex; align-items:center; justify-content:center; font-family:'Prompt',sans-serif; }
+
+  .table-wrap{ overflow-x:auto; margin:0 0 20px; border:1px solid var(--border); border-radius:12px; }
+  table{ width:100%; border-collapse:collapse; font-size:15px; }
+  th{ background:var(--panel); color:var(--accent); text-align:left; padding:12px 14px; font-family:'Prompt',sans-serif; font-weight:600; font-size:13px; text-transform:uppercase; letter-spacing:.03em; border-bottom:1px solid var(--border); }
+  td{ padding:12px 14px; border-bottom:1px solid var(--border); color:#dfe4ee; }
+  tr:last-child td{ border-bottom:none; }
+
+  .callout{ display:flex; gap:12px; padding:16px 18px; border-radius:14px; margin-bottom:18px; font-size:15.5px; }
+  .callout-icon{ font-size:18px; flex:none; }
+  .callout.good{ background:rgba(33,230,161,.08); border:1px solid rgba(33,230,161,.35); color:#dfe4ee; }
+  .callout.bad{ background:rgba(255,84,112,.08); border:1px solid rgba(255,84,112,.35); color:#dfe4ee; }
+  .callout.info{ background:rgba(0,102,255,.08); border:1px solid rgba(0,102,255,.35); color:#dfe4ee; }
+
+  .worksheet{ background:linear-gradient(180deg, var(--panel), var(--bg2)); border:1px solid var(--border); border-radius:16px; padding:22px; margin:20px 0; }
+  .worksheet-title{ font-family:'Prompt',sans-serif; font-weight:700; font-size:16px; margin-bottom:16px; color:var(--text); }
+  .ws-field{ display:block; margin-bottom:14px; }
+  .ws-field span{ display:block; font-size:14px; color:var(--muted); margin-bottom:6px; font-weight:600; }
+  .ws-field input, .ws-field textarea{
+    width:100%; background:rgba(255,255,255,.04); border:1px solid var(--border); border-radius:10px; padding:10px 12px;
+    color:var(--text); font-family:'Sarabun',sans-serif; font-size:15px; resize:vertical;
+  }
+  .ws-field input:focus, .ws-field textarea:focus{ outline:none; border-color:var(--accent); box-shadow:0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent); }
+  .ws-save-note{ font-size:12.5px; color:var(--muted); text-align:right; opacity:.7; }
+
+  .checklist-final{ background:var(--panel); border:1px solid var(--border); border-radius:16px; padding:24px; margin-top:12px; }
+  .checklist-final h4{ margin:0 0 14px; font-size:16px; color:var(--accent); }
+  .cl-item{ display:flex; align-items:flex-start; gap:10px; margin-bottom:10px; font-size:15.5px; color:#dfe4ee; }
+  .cl-item input{ margin-top:4px; accent-color:var(--accent); width:18px; height:18px; flex:none; }
+
+  .sources{ margin-top:36px; font-size:13.5px; color:var(--muted); border-top:1px solid var(--border); padding-top:18px; }
+  .sources a{ color:var(--muted); text-decoration:underline; }
+
+  .hero-diagram{ border:1px dashed var(--border); border-radius:16px; padding:18px; margin:16px 0 24px; background:radial-gradient(circle at 30% 20%, rgba(255,255,255,.04), transparent 60%); }
+  .hd-frame{ position:relative; border:1px solid var(--border); border-radius:12px; overflow:hidden; background:linear-gradient(160deg,#1a1d29,#0e0f16); min-height:280px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:32px 20px; gap:10px; }
+  .hd-tag{ position:absolute; font-family:'Prompt',sans-serif; font-size:11px; font-weight:700; letter-spacing:.03em; padding:3px 9px; border-radius:999px; background:rgba(0,0,0,.55); border:1px solid; }
+  .hd-visual-tag{ top:10px; left:10px; color:var(--cyan); border-color:var(--cyan); }
+  .hd-headline-tag{ top:78px; left:10px; color:var(--gs); border-color:var(--gs); }
+  .hd-sub-tag{ top:150px; left:10px; color:var(--ps); border-color:var(--ps); }
+  .hd-cta-tag{ bottom:16px; right:14px; color:var(--code); border-color:var(--code); }
+  .hd-headline{ font-family:'Prompt',sans-serif; font-weight:800; font-size:28px; color:#fff; max-width:520px; }
+  .hd-sub{ font-size:15px; color:#c6ccd8; max-width:440px; }
+  .hd-btn{ margin-top:10px; font-family:'Prompt',sans-serif; font-weight:700; font-size:14px; padding:10px 24px; border-radius:999px; background:var(--accent); color:#05060a; }
+  .hd-legend{ display:flex; flex-wrap:wrap; gap:14px; justify-content:center; margin-top:14px; font-size:12.5px; color:var(--muted); }
+  .hd-legend span{ display:flex; align-items:center; gap:6px; }
+  .hd-legend i{ width:10px; height:10px; border-radius:3px; display:inline-block; }
+
+  .compare-grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:18px 0 0; }
+  .compare-card{ border-radius:14px; padding:20px; border:1px solid var(--border); background:var(--panel); }
+  .compare-card.weak{ border-color:rgba(255,84,112,.4); background:rgba(255,84,112,.06); }
+  .compare-card.strong{ border-color:rgba(33,230,161,.4); background:rgba(33,230,161,.06); }
+  .compare-label{ font-family:'Prompt',sans-serif; font-weight:700; font-size:12px; text-transform:uppercase; letter-spacing:.03em; padding:4px 12px; border-radius:999px; display:inline-block; margin-bottom:12px; }
+  .compare-label.weak{ color:var(--code); background:rgba(255,84,112,.18); }
+  .compare-label.strong{ color:var(--gs); background:rgba(33,230,161,.18); }
+  .compare-card h5{ margin:0 0 8px; font-size:16px; font-family:'Prompt',sans-serif; color:var(--text); }
+  .compare-card p{ font-size:14.5px; margin:0 0 8px; color:#c6ccd8; line-height:1.6; }
+  .compare-card ul{ margin:0; padding-inline-start:18px; font-size:14px; color:#c6ccd8; }
+  .compare-card li{ margin-bottom:6px; }
+
+  .analysis-box{ background:rgba(0,255,255,.06); border-left:3px solid var(--cyan); border-radius:0 12px 12px 0; padding:14px 18px; margin:16px 0 24px; font-size:14.5px; color:#dfe4ee; }
+  .analysis-box b{ color:var(--cyan); }
+  .analysis-box summary{ cursor:pointer; font-family:'Prompt',sans-serif; font-weight:700; color:var(--cyan); font-size:14.5px; }
+  .analysis-box[open] summary{ margin-bottom:10px; }
+
+  .hd-frame-sm{ min-height:170px; padding:18px 14px; gap:6px; }
+  .hd-frame-sm .hd-headline{ font-size:19px; max-width:100%; }
+  .hd-frame-sm .hd-sub{ font-size:12.5px; max-width:100%; }
+  .hd-frame-sm .hd-btn{ font-size:12px; padding:7px 16px; margin-top:6px; }
+  .hd-frame-sm .hd-tag{ font-size:9.5px; padding:2px 7px; }
+
+  .tree{ font-size:14px; }
+  .tree .node{ background:rgba(255,255,255,.05); border:1px solid var(--border); border-radius:8px; padding:6px 10px; margin:4px 0; display:inline-block; }
+  .tree .branch{ padding-inline-start:18px; border-left:1px dashed var(--border); margin-inline-start:8px; }
+
+  .navmock{ display:flex; flex-wrap:wrap; gap:7px; }
+  .navmock span{ background:rgba(255,255,255,.06); border:1px solid var(--border); border-radius:999px; padding:6px 12px; font-size:12.5px; color:#dfe4ee; white-space:nowrap; }
+  .compare-card.weak .navmock span{ border-color:rgba(255,84,112,.3); }
+  .compare-card.strong .navmock span{ border-color:rgba(33,230,161,.3); }
+
+  @media (max-width:700px){
+    .compare-grid{ grid-template-columns:1fr; }
+  }
+
+  .respdemo{ background:var(--panel); border:1px solid var(--border); border-radius:18px; padding:22px; margin:20px 0 28px; }
+  .respdemo-toolbar{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px; }
+  .respdemo-btn{ font-family:'Prompt',sans-serif; font-weight:700; font-size:13.5px; padding:9px 16px; border-radius:999px; border:1px solid var(--border); background:rgba(255,255,255,.03); color:var(--muted); cursor:pointer; transition:all .2s ease; }
+  .respdemo-btn:hover{ border-color:var(--accent); color:var(--text); }
+  .respdemo-btn.active{ background:var(--accent); border-color:var(--accent); color:#05060a; }
+  .respdemo-size{ font-family:'Prompt',sans-serif; font-size:13px; font-weight:700; color:var(--cyan); margin-bottom:16px; }
+  .respdemo-viewport{ display:flex; justify-content:center; padding:24px 12px; background:radial-gradient(circle at 50% 0%, rgba(255,255,255,.04), transparent 60%); border-radius:14px; overflow-x:auto; }
+  .respdemo-frame{ width:260px; border-radius:22px; border:3px solid #2a2f3d; background:linear-gradient(165deg,#1a1d29,#0e0f16); box-shadow:0 20px 50px rgba(0,0,0,.4); overflow:hidden; transition:width .45s cubic-bezier(.4,0,.2,1); position:relative; flex:none; }
+  .respdemo-notch{ height:14px; background:#2a2f3d; border-radius:0 0 10px 10px; width:70px; margin:0 auto; transition:opacity .2s ease; }
+  .rd-hero{ padding:26px 18px 22px; display:flex; flex-direction:column; align-items:center; text-align:center; gap:8px; min-height:220px; justify-content:center; }
+  .hd-tag.rd-tag-img{ position:static; margin-bottom:6px; }
+  .rd-headline{ font-family:'Prompt',sans-serif; font-weight:800; color:#fff; font-size:16px; transition:font-size .3s ease; }
+  .rd-sub{ font-size:12px; color:#c6ccd8; transition:font-size .3s ease; }
+  .rd-btn{ margin-top:6px; font-family:'Prompt',sans-serif; font-weight:700; font-size:11.5px; padding:8px 18px; border-radius:999px; background:var(--accent); color:#05060a; transition:all .3s ease; }
+  .respdemo-note{ margin-top:14px; font-size:13.5px; color:#dfe4ee; background:rgba(255,255,255,.03); border-left:3px solid var(--accent); border-radius:0 10px 10px 0; padding:10px 14px; min-height:44px; }
+  .respdemo-hint{ margin:10px 0 0; font-size:12.5px; color:var(--muted); }
+
+  .respdemo[data-device="tablet"] .respdemo-frame{ width:420px; }
+  .respdemo[data-device="desktop"] .respdemo-frame{ width:640px; }
+  .respdemo[data-device="tablet"] .rd-headline{ font-size:21px; }
+  .respdemo[data-device="desktop"] .rd-headline{ font-size:27px; }
+  .respdemo[data-device="tablet"] .rd-sub{ font-size:14px; }
+  .respdemo[data-device="desktop"] .rd-sub{ font-size:16px; }
+  .respdemo[data-device="tablet"] .rd-btn{ font-size:13px; padding:9px 22px; }
+  .respdemo[data-device="desktop"] .rd-btn{ font-size:14.5px; padding:11px 28px; }
+  .respdemo[data-device="mobile"] .rd-btn{ width:100%; }
+  .respdemo[data-device="tablet"] .respdemo-notch,
+  .respdemo[data-device="desktop"] .respdemo-notch{ opacity:0; }
+
+  @media (max-width:700px){
+    .respdemo[data-device="desktop"] .respdemo-frame{ width:100%; max-width:640px; }
+  }
+
+  .pgrid{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:16px 0 20px; }
+  .pgrid-card{ background:var(--panel); border:1px solid var(--border); border-radius:14px; overflow:hidden; }
+  .pgrid-img{ height:100px; background:linear-gradient(135deg,#1a1d29,#0e0f16); display:flex; align-items:center; justify-content:center; color:var(--muted); font-size:12px; }
+  .pgrid-body{ padding:14px; }
+  .pgrid-title{ font-family:'Prompt',sans-serif; font-weight:700; font-size:14.5px; color:var(--text); margin-bottom:4px; }
+  .pgrid-price{ font-size:13px; color:var(--accent); font-weight:700; margin-bottom:10px; }
+  .pgrid-btn{ display:inline-block; font-family:'Prompt',sans-serif; font-weight:700; font-size:12px; padding:7px 16px; border-radius:999px; background:var(--accent); color:#05060a; }
+  @media (max-width:700px){ .pgrid{ grid-template-columns:1fr 1fr; } }
+
+  .pager{ display:flex; justify-content:space-between; gap:16px; margin-top:48px; padding-top:24px; border-top:1px solid var(--border); }
+  .pager a{ font-family:'Prompt',sans-serif; font-weight:600; font-size:15px; padding:12px 18px; border:1px solid var(--border); border-radius:12px; color:var(--text); }
+  .pager a:hover{ border-color:var(--accent); color:var(--accent); }
+  .pager .disabled{ opacity:.35; pointer-events:none; }
+
+  footer{ max-width:920px; margin:0 auto; padding:24px; text-align:center; color:var(--muted); font-size:13px; }
+
+  @media (max-width:700px){
+    .segnav{ display:none; }
+    h1{ font-size:30px; }
+    body{ font-size:16.5px; }
+  }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-inner">
+    <a class="back" href="../index.html">← กลับหน้าแรก</a>
+    <nav class="segnav">
+      <a href="#s1">ช่วง 1</a>
+      <a href="#s2">ช่วง 2</a>
+      <a href="#s3">ช่วง 3</a>
+      <a href="#s4">ช่วง 4</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="eyebrow">
+    <span class="badge-num">ครั้งที่ 3</span>
+    <span class="badge-meta">120 นาที</span>
+    <span class="badge-meta">·</span>
+    <span class="badge-meta" style="color:var(--accent)">Google Sites + โค้ดเสริม (เกริ่นนำ)</span>
+  </div>
+  <h1>มัลติมีเดีย, Mobile Preview และรู้จัก Embed Code เบื้องต้น</h1>
+  <div class="obj-box">
+    <h4>สิ่งที่จะได้หลังจบครั้งนี้</h4>
+    <ul><li>เข้าใจว่า "Embed" คืออะไร และรู้จักปุ่ม Insert แบบต่างๆ ที่ Google Sites เตรียมไว้ให้ (YouTube, Map, Drive, Embed)</li><li>ฝังวิดีโอ YouTube ลงหน้าเว็บได้จริง เพื่อเล่าเรื่องแบรนด์หรือสาธิตสินค้า</li><li>ฝัง Google Maps ลงหน้า Contact Us เพื่อให้ลูกค้าหาที่ตั้งจริงเจอและกดนำทางได้ทันที</li><li>รู้จักวิธีฝังไฟล์ PDF จาก Google Drive (เมนู/ใบราคา/โบรชัวร์)</li><li>เข้าใจทฤษฎี Thumb Zone และนำไปตรวจ Mobile Preview ของเว็บตัวเอง</li><li>เขียนเอกสาร Graphic Asset List เตรียมพร้อมสำหรับครั้งที่ 4-6 (Photoshop)</li></ul>
+  </div>
+
+  <div class="deliverable-box">
+    <span class="dl-icon">🎯</span>
+    <div>
+      <h4>ผลงานที่ต้องได้วันนี้</h4>
+      <p>เว็บไซต์ฝังวิดีโอ/แผนที่อย่างน้อย 1 อย่างสำเร็จ และมีเอกสาร Graphic Asset List ที่เขียนครบสำหรับใช้ในครั้งที่ 4-6</p>
+    </div>
+  </div>
+</div>
+
+<div class="section-wrap">
+
+  <section class="segment" id="s1">
+    <div class="segment-head">
+      <span class="segment-time">15 นาที</span>
+      <h2>ช่วงที่ 1 · Recap & Warm-up</h2>
+    </div>
+    <div class="segment-body">
+      <p>เปิดลิงก์เว็บไซต์ของทุกคนที่ Publish ไปครั้งที่แล้ว ทวนดูให้ครบทั้ง 4 หน้า — ปุ่ม CTA ทุกหน้ายังเป็นปุ่มจริงและหน้าตาเหมือนกันไหม ภาพ Header แต่ละหน้ายังไม่ซ้ำกันไหม ฟอร์มในหน้า Contact Us ยังกรอกได้จริงไหม</p>
+      <div class="callout info"><span class="callout-icon">💡</span><div>ทวนของเดิม: เปิด CTA Mapping Sheet จากครั้งที่ 2 วางไว้ข้างๆ วันนี้จะไม่แก้ข้อความ CTA เพิ่มแล้ว แต่จะเสริมมัลติมีเดียเข้าไปในหน้าเดิม</div></div>
+      <p>เป้าหมายวันนี้: ฝังมัลติมีเดีย (วิดีโอ/แผนที่/PDF) ให้เว็บมีชีวิตขึ้น เข้าใจว่า Mobile Preview ต้องเช็กอะไรมากกว่าแค่ "อ่านออกไหม" และเตรียมรายการกราฟิกที่ต้องทำในครั้งที่ 4-6</p>
+    </div>
+  </section>
+
+  <section class="segment" id="s2">
+    <div class="segment-head">
+      <span class="segment-time">35 นาที</span>
+      <h2>ช่วงที่ 2 · Demo & Concept</h2>
+    </div>
+    <div class="segment-body">
+      <h3>1. Embed คืออะไร</h3>
+      <p><b>Embed</b> (การฝัง) คือการดึงเนื้อหาจากที่อื่นมาแสดงในหน้าเว็บของเรา โดยไม่ต้องอัปโหลดไฟล์ขึ้นเว็บเอง เช่น วิดีโอจาก YouTube, แผนที่จาก Google Maps, ไฟล์ PDF จาก Google Drive หรือโพสต์จาก Instagram — ต้นฉบับยังอยู่ที่เจ้าของจริง เว็บของเราแค่ "เปิดหน้าต่าง" ไปแสดงเนื้อหานั้น</p>
+      <p>เมนู <b>Insert</b> ของ Google Sites แบ่งปุ่มที่เกี่ยวกับการฝังเนื้อหาออกเป็น 2 กลุ่ม:</p>
+      <div class="table-wrap"><table><thead><tr><th>กลุ่ม</th><th>ตัวอย่างปุ่ม</th><th>ลักษณะ</th></tr></thead>
+        <tbody><tr><td>ปุ่มเฉพาะทาง</td><td>YouTube, Map, Drive, Forms</td><td>Google เตรียม UI ค้นหา/เลือกเนื้อหาให้เสร็จ ใช้ง่าย ปลอดภัย ไม่ต้องยุ่งกับโค้ด</td></tr><tr><td>Embed (ทั่วไป)</td><td>Embed URL / Embed code</td><td>รับลิงก์เว็บไซต์ หรือโค้ด HTML/iframe จากเว็บอื่นโดยตรง ยืดหยุ่นกว่าแต่ต้องระวังแหล่งที่มา</td></tr></tbody></table></div>
+      <div class="table-wrap"><table><thead><tr><th>ประเภทเนื้อหา</th><th>ปุ่มที่ใช้</th><th>เหมาะกับหน้าไหน</th></tr></thead>
+        <tbody><tr><td>🎬 วิดีโอ YouTube</td><td>Insert → YouTube</td><td>Home/About Us (เล่าเรื่องแบรนด์) หรือ Products (สาธิตวิธีใช้สินค้า)</td></tr><tr><td>🗺 แผนที่ Google Maps</td><td>Insert → Map</td><td>Contact Us (บอกที่ตั้งจริง กดนำทางได้)</td></tr><tr><td>📄 ไฟล์ PDF (เมนู/ใบราคา/แคตตาล็อก)</td><td>Insert → Drive</td><td>Products/Services หรือหน้าแยกต่างหากถ้ามีรายละเอียดเยอะ</td></tr><tr><td>🔗 เนื้อหาเว็บอื่นที่ไม่มีปุ่มเฉพาะ (เช่น โพสต์ Instagram, งานออกแบบ Canva)</td><td>Insert → Embed</td><td>แล้วแต่กรณี ใช้เมื่อไม่มีปุ่มเฉพาะทางให้เท่านั้น</td></tr></tbody></table></div>
+      <div class="callout bad"><span class="callout-icon">🚫</span><div>ข้อควรระวัง: ปุ่ม Embed code รับโค้ด HTML/iframe จากเว็บไหนก็ได้ ถ้าเอาโค้ดจากเว็บที่ไม่รู้จัก/ไม่น่าเชื่อถือมาวาง อาจแฝงสคริปต์ที่เป็นอันตรายมาด้วย วันนี้ให้ใช้ Embed เฉพาะกับแหล่งที่เชื่อถือได้ (YouTube, Google Maps, Canva, Instagram ทางการ) เท่านั้น — เรื่องเขียน/ตรวจโค้ดเองอย่างละเอียดจะไปเรียนในครั้งที่ 8</div></div>
+
+      <h3>2. ฝังวิดีโอ YouTube ให้ตรงจุดประสงค์</h3>
+      <p>วิดีโอที่ธุรกิจส่วนใหญ่ควรมีอย่างน้อย 1 แบบ:</p>
+      <ul class="list"><li><b>วิดีโอแนะนำแบรนด์/เบื้องหลัง</b> — เสริม Brand Story ในหน้า About Us ให้จับต้องได้มากกว่าตัวหนังสือ</li><li><b>วิดีโอสาธิตวิธีใช้สินค้า/บริการ</b> — ลดคำถามซ้ำๆ ในหน้า Products/Services ลูกค้าเห็นภาพก่อนตัดสินใจ</li><li><b>วิดีโอรีวิวจากลูกค้าจริง</b> — เพิ่มความน่าเชื่อถือ ใส่ตรงไหนก็ได้ที่เกี่ยวข้อง</li></ul>
+      <div class="callout info"><span class="callout-icon">💡</span><div>ถ้ายังไม่มีวิดีโอของตัวเอง ใช้วิดีโอตัวอย่างที่เกี่ยวข้องกับประเภทธุรกิจจาก YouTube ไปพลางก่อนได้ (ระบุว่าเป็นตัวอย่างชั่วคราว ไม่ใช่โฆษณาคู่แข่งโดยตรง) แล้วค่อยเปลี่ยนเป็นวิดีโอของจริงทีหลัง</div></div>
+      <div class="compare-grid">
+        <div class="compare-card weak">
+          <span class="compare-label weak">🚫 วิดีโอไม่เกี่ยวกับธุรกิจ</span>
+          <p style="font-size:14px;color:#c6ccd8;line-height:1.6">ใส่วิดีโอเพลง/มีมตลกๆ เพราะ "อยากให้เว็บดูมีชีวิตชีวา" ทำให้ลูกค้าสับสนว่าเว็บนี้ขายอะไรกันแน่</p>
+        </div>
+        <div class="compare-card strong">
+          <span class="compare-label strong">✅ วิดีโอตรงจุดประสงค์</span>
+          <p style="font-size:14px;color:#dfe4ee;line-height:1.6">วิดีโอสั้นสาธิตการใช้สินค้า หรือคลิปเบื้องหลังการทำงาน ที่ตอบคำถามลูกค้าได้จริง</p>
+        </div>
+      </div>
+
+      <h3>3. ฝัง Google Maps ให้ลูกค้าหาเจอจริง</h3>
+      <p>ที่อยู่ที่พิมพ์เป็นตัวหนังสือเฉยๆ ลูกค้าต้องคัดลอกไปเปิดแอปแผนที่เองอีกที ส่วนแผนที่ที่ฝังไว้ในหน้าเว็บ ลูกค้ากดแล้วเปิด Google Maps นำทางได้ทันทีจากมือถือ โดยเฉพาะหน้า Contact Us ควรมีแผนที่เสมอ</p>
+      <ul class="list"><li><b>ถ้าธุรกิจลงทะเบียนใน Google Maps ไว้แล้ว</b> — ค้นหาชื่อร้าน/บริษัทตรงๆ ในช่องค้นหาตอนแทรก Map จะเจอหมุดพร้อมรีวิว/เวลาเปิดปิดที่มีอยู่แล้ว</li><li><b>ถ้ายังไม่มีธุรกิจจริงหรือยังไม่ได้ลงทะเบียน</b> — ปักหมุดเองด้วยที่อยู่/พิกัดจริงที่ใช้เป็นสมมติฐานของธุรกิจ (ต้องเป็นพื้นที่จริงที่มีอยู่ ไม่ใช่พิกัดมั่ว)</li></ul>
+
+      <h3>4. ฝัง PDF จาก Google Drive</h3>
+      <p>เหมาะกับเนื้อหาที่มีรายละเอียดเยอะเกินกว่าจะพิมพ์ในหน้าเว็บตรงๆ เช่น เมนูอาหารทั้งเล่ม ใบราคา/Price list แคตตาล็อกสินค้า พอร์ตโฟลิโอผลงาน หรือใบรับรอง/Certificate</p>
+      <div class="callout bad"><span class="callout-icon">🚫</span><div>ข้อควรระวัง: ไฟล์ต้องตั้งค่าแชร์เป็น <b>"ทุกคนที่มีลิงก์" (Anyone with the link)</b> ใน Google Drive ก่อน ไม่งั้นฝังลงเว็บแล้วคนอื่นจะเปิดไม่ได้ (หลักการเดียวกับที่เจอตอนฝัง Google Form ในครั้งที่ 2)</div></div>
+
+      <h3>5. ทฤษฎี Thumb Zone: ทำไม Mobile Preview ไม่ใช่แค่ดูว่าอ่านออก</h3>
+      <p>ครั้งที่ 1 สอนให้เปิด Preview เช็กว่าข้อความ/ภาพไม่ถูกตัดบัง แต่ยังไม่ได้พูดถึงอีกเรื่องที่สำคัญพอกัน — คนส่วนใหญ่ถือมือถือและกดหน้าจอด้วย <b>นิ้วโป้งข้างเดียว</b> ซึ่งมี "โซนที่เอื้อมถึงง่าย-ยาก" ต่างกันในแต่ละส่วนของจอ งานวิจัยของ Steven Hoober (เผยแพร่ผ่าน Smashing Magazine) แบ่งจอมือถือเวลาถือมือเดียวออกเป็น 3 โซน</p>
+      <div class="table-wrap"><table><thead><tr><th>โซน</th><th>ตำแหน่งบนจอ</th><th>ความหมาย</th></tr></thead>
+        <tbody><tr><td>🟢 Natural / Easy</td><td>ค่อนไปทางล่าง-กลางจอ</td><td>นิ้วโป้งเอื้อมถึงสบายโดยไม่ต้องขยับมือ เหมาะกับปุ่มที่กดบ่อย/สำคัญที่สุด</td></tr><tr><td>🟡 Stretch / OK</td><td>กลางจอค่อนขึ้นบน</td><td>ต้องยืดนิ้วโป้งเพิ่มขึ้นนิดหน่อย ยังกดได้แต่ไม่สะดวกเท่าโซนล่าง</td></tr><tr><td>🔴 Hard to reach</td><td>มุมบนสุดทั้งสองฝั่งของจอ</td><td>เอื้อมยากที่สุด ต้องขยับมือจับใหม่หรือใช้มืออีกข้างช่วยกด ไม่ควรมีปุ่มสำคัญที่ต้องกดบ่อยอยู่ตรงนี้</td></tr></tbody></table></div>
+      <p>นำไปใช้กับเว็บ Google Sites ของเราอย่างไร:</p>
+      <ul class="list"><li>ปุ่ม CTA หลัก/ปุ่มโทร-แอด LINE ควรอยู่ในเนื้อหาส่วนที่คนเลื่อนจอลงมาเจอ (โซนล่าง-กลางจอ) ซึ่งปกติ Google Sites จัดเลย์เอาต์แบบเรียงบล็อกลงมาอยู่แล้ว จึงมักจะโอเคโดยธรรมชาติ</li><li>ระวังอย่าไปวางลิงก์/ปุ่มที่ต้องกดบ่อยไว้ที่มุมบนสุดของ Header (โซนแดง) เพราะเป็นจุดที่เอื้อมยากที่สุดบนมือถือ</li><li>วันนี้แค่ <b>ทดสอบด้วยสายตาจริง</b> ผ่าน Mobile Preview ยังไม่ต้องแก้โค้ดอะไร — ถ้าเจอจุดที่มีปัญหาให้จดไว้ก่อน จะไปปรับละเอียดพร้อมเรื่อง Responsive อื่นๆ ในครั้งที่ 9</li></ul>
+      <div class="callout info"><span class="callout-icon">💡</span><div>หลักการนี้ใช้ได้กับทุกหน้าที่มีปุ่ม CTA รวมถึงวิดีโอ/แผนที่ที่เพิ่งฝังลงไปวันนี้ด้วย — ปุ่มเล่นวิดีโอหรือปุ่มซูมแผนที่ก็ควรอยู่ในตำแหน่งที่กดถึงง่ายเช่นกัน</div></div>
+
+      <h3>6. Graphic Asset List คืออะไร ทำไมต้องเขียนวันนี้</h3>
+      <p>ก่อนเข้าสู่กลุ่ม B (ครั้งที่ 4-6 ที่จะลงมือทำกราฟิกด้วย Photoshop) ต้องรู้ก่อนว่าจะต้องผลิตอะไรบ้าง ไม่ใช่ไปนั่งคิดหน้างานตอนเปิด Photoshop เพราะจะเสียเวลาคาบเรียนไปกับการคิดแทนการลงมือทำ</p>
+      <div class="table-wrap"><table><thead><tr><th>รายการกราฟิก</th><th>จะใช้ในครั้งที่</th><th>ต้องเตรียมอะไรวันนี้</th></tr></thead>
+        <tbody><tr><td>โลโก้ + Favicon</td><td>4</td><td>คิดคร่าวๆ ว่าอยากได้โทนสี/สไตล์แบบไหน มีโลโก้ร่างอยู่แล้วหรือต้องออกแบบใหม่ทั้งหมด</td></tr><tr><td>ภาพสินค้าไดคัท (อย่างน้อย 3-5 ชิ้น)</td><td>5</td><td>รู้ว่าจะไดคัทสินค้าตัวไหนบ้าง และภาพต้นฉบับ (ถ่ายเอง/สต็อก/AI) จะมาจากไหน</td></tr><tr><td>Hero Banner, Feature Card/Infographic, ชุดปุ่ม CTA</td><td>6</td><td>มีไอเดียคร่าวๆ ว่า Hero Banner อยากสื่ออะไร และ Feature Card จะโชว์จุดเด่นอะไรของธุรกิจ</td></tr></tbody></table></div>
+    </div>
+  </section>
+
+  <section class="segment" id="s3">
+    <div class="segment-head">
+      <span class="segment-time">55 นาที</span>
+      <h2>ช่วงที่ 3 · Hands-on Practice</h2>
+    </div>
+    <div class="segment-body">
+      <p>ลำดับการทำวันนี้: Worksheet วางแผนมัลติมีเดีย (10 นาที) → ฝังวิดีโอ YouTube (10 นาที) → ฝัง Google Maps (10 นาที) → ฝัง PDF ถ้าทันเวลา (10 นาที) → เช็ก Mobile Preview ด้วย Thumb Zone (5 นาที) → เขียน Graphic Asset List (10 นาที)</p>
+
+      <h3>ขั้นตอนที่ 1: Worksheet วางแผนมัลติมีเดีย (10 นาที)</h3>
+      <div class="worksheet">
+        <div class="worksheet-title">📝 Multimedia Plan — จะใส่อะไรในหน้าไหน</div>
+        <label class="ws-field"><span>หน้า Home / About Us — จะใส่วิดีโออะไร (ถ้ามี)</span><input id="ws-3-1-0" data-ws type="text" placeholder="เช่น วิดีโอแนะนำร้าน 1 นาที"></label><label class="ws-field"><span>หน้า Products/Services — จะใส่วิดีโอ/PDF อะไร (ถ้ามี)</span><input id="ws-3-1-1" data-ws type="text" placeholder="เช่น วิดีโอสาธิตวิธีใช้ หรือ PDF แคตตาล็อกสินค้า"></label><label class="ws-field"><span>หน้า Contact Us — ที่อยู่/สถานที่ที่จะปักหมุดในแผนที่</span><input id="ws-3-1-2" data-ws type="text" placeholder="เช่น ชื่อร้าน หรือที่อยู่เต็ม"></label>
+        <div class="ws-save-note" data-ws-note>บันทึกอัตโนมัติในเบราว์เซอร์นี้</div>
+      </div>
+
+      <h3>ขั้นตอนที่ 2: ฝังวิดีโอ YouTube (10 นาที)</h3>
+      <ol class="steps"><li>เปิดหน้าเว็บที่จะใส่วิดีโอตามที่วางแผนไว้ใน Worksheet</li><li>คลิกจุดที่ต้องการวางวิดีโอ ที่แถบขวามือคลิกแท็บ <b>Insert</b> → <b>YouTube</b></li><li>ค้นหาชื่อวิดีโอ หรือวางลิงก์ YouTube ที่มีอยู่แล้วลงในช่องค้นหา</li><li>เลือกวิดีโอที่ต้องการ แล้วคลิก <b>Select</b>/<b>Insert</b></li><li>ลากมุมกล่องวิดีโอเพื่อปรับขนาดให้พอดีกับพื้นที่หน้า</li><li>กด <b>Preview</b> เช็กว่าวิดีโอกดเล่นได้จริง</li></ol>
+
+      <h3>ขั้นตอนที่ 3: ฝัง Google Maps ในหน้า Contact Us (10 นาที)</h3>
+      <ol class="steps"><li>เปิดหน้า <b>Contact Us</b> คลิกจุดที่ต้องการวางแผนที่</li><li>ที่แถบขวามือคลิกแท็บ <b>Insert</b> → <b>Map</b></li><li>พิมพ์ชื่อสถานที่หรือที่อยู่ตาม Worksheet ที่กรอกไว้ในช่องค้นหา</li><li>เลือกผลลัพธ์ที่ตรงกับตำแหน่งจริง แล้วคลิก <b>Select</b>/<b>Insert</b></li><li>ลากมุมกล่องแผนที่เพื่อปรับขนาดให้พอดีกับพื้นที่หน้า</li><li>กด <b>Preview</b> เช็กว่าแผนที่ซูม/เลื่อนดูได้จริง</li></ol>
+
+      <h3>ขั้นตอนที่ 4: ฝัง PDF จาก Google Drive (10 นาที, ถ้าทันเวลา)</h3>
+      <ol class="steps"><li>อัปโหลดไฟล์ PDF (เมนู/ใบราคา/แคตตาล็อก) ขึ้น Google Drive ของตัวเองก่อน</li><li>คลิกขวาที่ไฟล์ → <b>Share</b> → เปลี่ยนสิทธิ์เป็น <b>"ทุกคนที่มีลิงก์" (Anyone with the link)</b></li><li>กลับมาที่ Google Sites เปิดหน้าที่ต้องการ คลิกจุดที่จะวาง PDF</li><li>ที่แถบขวามือคลิกแท็บ <b>Insert</b> → <b>Drive</b></li><li>เลือกไฟล์ PDF ที่เพิ่งแชร์ไว้ แล้วคลิก <b>Insert</b></li><li>ลากมุมกล่องเพื่อปรับขนาด แล้วกด <b>Preview</b> เช็กว่าเปิดอ่านได้จริง</li></ol>
+      <div class="callout bad"><span class="callout-icon">🚫</span><div>ถ้าลืมเปลี่ยนสิทธิ์แชร์ไฟล์เป็นสาธารณะก่อน คนอื่นจะเห็นกล่อง PDF ว่างเปล่าหรือขึ้น "ไม่มีสิทธิ์เข้าถึง" แม้จะฝังลงเว็บสำเร็จแล้วก็ตาม</div></div>
+
+      <h3>ขั้นตอนที่ 5: เช็ก Mobile Preview ด้วยหลัก Thumb Zone (5 นาที)</h3>
+      <ol class="steps"><li>กด <b>Preview</b> แล้วสลับไปมุมมองมือถือ</li><li>ลองจินตนาการว่ากำลังถือมือถือด้วยมือเดียว ไล่ดูทุกหน้า (Home, About Us, Products/Services, Contact Us)</li><li>เช็กว่าปุ่ม CTA หลัก/ปุ่มเล่นวิดีโอ/ปุ่มซูมแผนที่ อยู่ในโซนที่นิ้วโป้งเอื้อมถึงง่ายหรือไม่</li><li>ถ้าเจอจุดที่อยู่ในโซนเอื้อมยาก (มุมบนสุด) ให้จดบันทึกไว้ก่อน ยังไม่ต้องแก้วันนี้ — จะไปปรับพร้อมเรื่อง Responsive ในครั้งที่ 9</li></ol>
+
+      <h3>ขั้นตอนที่ 6: เขียน Graphic Asset List (10 นาที)</h3>
+      <div class="worksheet">
+        <div class="worksheet-title">📝 Graphic Asset List — เตรียมพร้อมสำหรับครั้งที่ 4-6</div>
+        <label class="ws-field"><span>โลโก้ — มีอยู่แล้วหรือต้องออกแบบใหม่ / โทนสีที่อยากได้</span><textarea id="ws-3-2-0" data-ws rows="2" placeholder="เช่น ยังไม่มี อยากได้โทนสีเขียว-น้ำตาล ดูอบอุ่น"></textarea></label><label class="ws-field"><span>รายชื่อสินค้าที่จะไดคัท (อย่างน้อย 3-5 ชิ้น)</span><textarea id="ws-3-2-1" data-ws rows="2" placeholder="เช่น คุกกี้ไร้กลูเตน, บราวนี่มะพร้าว, เซตทดลอง"></textarea></label><label class="ws-field"><span>แหล่งภาพต้นฉบับที่จะใช้ตัดต่อ</span><input id="ws-3-2-2" data-ws type="text" placeholder="เช่น ถ่ายเอง / ซื้อภาพสต็อก / สร้างด้วย AI"></label><label class="ws-field"><span>ไอเดียคร่าวๆ สำหรับ Hero Banner และ Feature Card</span><textarea id="ws-3-2-3" data-ws rows="2" placeholder="เช่น Hero Banner โชว์สินค้าขายดี Feature Card เน้นจุดเด่น 3 ข้อ"></textarea></label>
+        <div class="ws-save-note" data-ws-note>บันทึกอัตโนมัติในเบราว์เซอร์นี้</div>
+      </div>
+      <div class="callout good"><span class="callout-icon">✅</span><div>เก็บ Worksheet นี้ไว้ให้ดี — ครั้งที่ 4 จะเปิดใช้ต่อทันทีตอนเริ่มออกแบบโลโก้และ Favicon จริงใน Photoshop</div></div>
+    </div>
+  </section>
+
+  <section class="segment" id="s4">
+    <div class="segment-head">
+      <span class="segment-time">20 นาที</span>
+      <h2>ช่วงที่ 4 · Integration & Wrap-up</h2>
+    </div>
+    <div class="segment-body">
+      <p>ปิดคาบด้วยการทดสอบว่ามัลติมีเดียที่ฝังไว้ใช้งานได้จริง ไม่ใช่แค่แสดงผลบนหน้าจอตอนแก้ไข</p>
+      <ol class="steps"><li>เปิด Preview เช็กว่าวิดีโอ/แผนที่/PDF ที่ฝังไว้เล่น/เปิดได้จริงทั้งมุมมองเดสก์ท็อปและมือถือ</li><li>คลิกเมนูทุกหน้าอีกครั้ง เช็กว่าปุ่ม CTA และลิงก์ยังทำงานถูกต้องเหมือนครั้งที่ 2</li><li>กด <b>Publish</b> เพื่อเผยแพร่การเปลี่ยนแปลงล่าสุด</li></ol>
+      <div class="callout good"><span class="callout-icon">✅</span><div>จบครั้งนี้เว็บไซต์ควรมีมัลติมีเดียอย่างน้อย 1 อย่างที่ใช้งานได้จริง และมี Graphic Asset List พร้อมเข้าสู่ครั้งที่ 4 — ครั้งที่ 4 จะเริ่มลงมือทำสีแบรนด์ โลโก้ และ Favicon จริงด้วย Photoshop โดยใช้ Asset List ที่เขียนวันนี้เป็นตัวตั้ง</div></div>
+      <h3>แหล่งค้นคว้าเพิ่มเติม (ถ้าอยากศึกษาต่อเอง)</h3>
+      <p>ถ้าอยากเห็นตัวอย่างการใช้วิดีโอ/แผนที่/PDF บนเว็บจริงตามประเภทธุรกิจ ลองค้นคำเหล่านี้ใน YouTube/Google Images:</p>
+      <ul class="list"><li>E-Commerce → “Product Demo Video Website Examples”</li><li>Service &amp; Lead → “Contact Us Page Map Design Examples”</li><li>Corporate/B2B → “Company Overview Video Website”</li><li>Education → “Course Catalog PDF Landing Page”</li></ul>
+    </div>
+  </section>
+
+  <section class="segment" style="border-top:1px solid var(--border);">
+    <div class="checklist-final">
+      <h4>✅ เช็กก่อนจบครั้งที่ 3</h4>
+      <label class="cl-item"><input type="checkbox" data-cl id="cl-3-0"><span>กรอก Worksheet Multimedia Plan ครบ</span></label><label class="cl-item"><input type="checkbox" data-cl id="cl-3-1"><span>ฝังวิดีโอ YouTube หรือ Google Maps สำเร็จอย่างน้อย 1 อย่าง และเปิดใช้งานได้จริงใน Preview</span></label><label class="cl-item"><input type="checkbox" data-cl id="cl-3-2"><span>ถ้าฝัง PDF จาก Drive ด้วย — ไฟล์ตั้งค่าแชร์เป็น “ทุกคนที่มีลิงก์” แล้ว และเปิดอ่านได้จริง</span></label><label class="cl-item"><input type="checkbox" data-cl id="cl-3-3"><span>เปิด Mobile Preview เช็ก Thumb Zone ของปุ่ม CTA หลักในทุกหน้าแล้ว</span></label><label class="cl-item"><input type="checkbox" data-cl id="cl-3-4"><span>เขียน Graphic Asset List ครบตามฟอร์ม (โลโก้, สินค้าที่จะไดคัท, แหล่งภาพต้นฉบับ, ไอเดีย Hero Banner/Feature Card)</span></label><label class="cl-item"><input type="checkbox" data-cl id="cl-3-5"><span>กด Publish สำเร็จ</span></label>
+    </div>
+  </section>
+
+  <div class="sources">
+    อ้างอิง: <a href="https://support.google.com/sites/answer/90569?hl=en" target="_blank" rel="noopener">Google Sites Help — Add Google files, videos, website content & more</a> · <a href="https://support.google.com/sites/answer/153897?hl=en" target="_blank" rel="noopener">Google Sites Help — Embed a URL or code on your site</a> · <a href="https://www.smashingmagazine.com/2016/09/the-thumb-zone-designing-for-mobile-users/" target="_blank" rel="noopener">Smashing Magazine — The Thumb Zone: Designing For Mobile Users</a>
+  </div>
+
+  <div class="pager">
+    <a href="lesson-02.html">← ครั้งที่ 2</a>
+    <a class="disabled" href="lesson-04.html">ครั้งที่ 4 →</a>
+  </div>
+</div>
+
+<footer>ครั้งที่ 3 จาก 10 · แผนการสอนการสร้างเว็บไซต์ (ฉบับรวบรัด)</footer>
+
+<script>
+(function(){
+  var STORAGE_KEY = 'lesson-03-worksheet';
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e){}
+  document.querySelectorAll('[data-ws]').forEach(function(el){
+    if (saved[el.id]) el.value = saved[el.id];
+    el.addEventListener('input', function(){
+      saved[el.id] = el.value;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
+    });
+  });
+  var CL_KEY = 'lesson-03-checklist';
+  var clSaved = {};
+  try { clSaved = JSON.parse(localStorage.getItem(CL_KEY) || '{}'); } catch(e){}
+  document.querySelectorAll('[data-cl]').forEach(function(el){
+    if (clSaved[el.id]) el.checked = true;
+    el.addEventListener('change', function(){
+      clSaved[el.id] = el.checked;
+      localStorage.setItem(CL_KEY, JSON.stringify(clSaved));
+    });
+  });
+})();
+</script>
+
+</body></html>
